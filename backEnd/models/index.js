@@ -8,7 +8,7 @@ const sequelizeInstance = new Sequelize(
   {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
-    operatorsAliases: false,
+    // operatorsAliases: false,
     pool: {
       max: dbConfig.pool.max,
       min: dbConfig.pool.min,
@@ -21,7 +21,7 @@ const sequelizeInstance = new Sequelize(
 const db = {};
 
 db.Sequelize = Sequelize;
-db.Sequelize = sequelizeInstance;
-db.users = require("./users")(sequelizeInstance, Sequelize);
+db.sequelize = sequelizeInstance;
+db.users = require("./Users")(sequelizeInstance, Sequelize);
 
 module.exports = db;

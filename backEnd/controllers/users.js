@@ -1,6 +1,5 @@
-// const res = require("express/lib/response");
-const db = require("../models");
-const User = db.User;
+const db = require("../models/Users");
+const User = db.Users;
 const Op = db.Sequelize.Op;
 
 // Inscription
@@ -10,7 +9,6 @@ exports.signUp = async (req, res, next) => {
   const userLastName = params.lastName;
   const userEmail = params.email;
   const userPwd = params.password;
-  const userPseudo = params.pseudo;
   const regexEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const pwdRegex =
@@ -36,13 +34,13 @@ exports.signUp = async (req, res, next) => {
     jwt.sign({ id: newUser.id }, "JSON_TOKEN", { expiresIn: "24H" });
 
   try {
-    if (!userName && !userLastName && !userEmail && !userPseudo && !userPwd) {
+    if (!userName && !userLastName && !userEmail && !userPwd) {
       throw new Error("Veuillez remplir les champs pour l'inscription");
     }
     if (!regexEmail.test(userEmail)) {
       throw new Error("Format de l'e-mail Invalide");
     }
-    if (!regexPassword.test(userPwd)) {
+    if (!pwdRegex.test(userPwd)) {
       throw new error(
         "Le mot de passe doit contenir au moins: 8 caractères - 1 lettre minuscule - 1 lettre majuscule - 1 chiffre - 1 caractère spécial"
       );
@@ -104,7 +102,7 @@ exports.create = (req, res, next) => {
     name: req.body.name,
     firstName: req.body.firstName,
     email: req.body.email,
-    pseudo: req.body.pseudo,
+    password: req.body.password,
   };
 
   //   Créer et Sauvegarder l'utilisateur dans la DB
@@ -164,7 +162,7 @@ exports.update = (req, res, next) => {
   })
     .then((num) => {
       if (num == 1) {
-        res.send({ message: "Votre Pseudo a bien été changé" });
+        res.send({ message: "Votre Profil a bien été changé" });
       } else {
         res.send({ message: "Erreur pendant la mis à jour de votre profil" });
       }

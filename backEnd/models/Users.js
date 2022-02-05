@@ -1,28 +1,23 @@
 // Creation des TABLES et DATAFIELDS pour la DB Groupomania et du Model: User
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("User", {
+  const User = sequelize.define("user", {
     name: {
       type: Sequelize.STRING,
-      required: true,
+      allowNull: false,
     },
     firstName: {
       type: Sequelize.STRING,
-      required: true,
+      allowNull: false,
     },
     email: {
       type: Sequelize.STRING,
-      required: true,
       unique: true,
-    },
-    pseudo: {
-      type: Sequelize.STRING,
-      required: true,
-      unique: true,
+      allowNull: false,
     },
     password: {
       type: Sequelize.STRING,
-      required: true,
       unique: true,
+      allowNull: false,
     },
   });
   return User;
