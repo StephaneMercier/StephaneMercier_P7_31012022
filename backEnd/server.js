@@ -3,13 +3,13 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 require("./routes/users");
-const db = require("./models/index");
+// const db = require("./models/index");
 
 var corsOptions = {
   origin: "https://localhost:8081",
 };
 
-// db.Sequelize.sync();
+// db.sequelize.sync();
 app.use(cors(corsOptions));
 
 app.use(express.json());

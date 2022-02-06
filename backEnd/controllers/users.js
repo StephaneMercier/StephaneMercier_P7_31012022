@@ -1,9 +1,9 @@
-const db = require("../models/Users");
-const User = db.Users;
+const db = require("../models/user");
+const User = db.User;
 const Op = db.Sequelize.Op;
 
 // Inscription
-exports.signUp = async (req, res, next) => {
+exports.signup = async (req, res, next) => {
   const params = req.body.params;
   const userName = params.name;
   const userLastName = params.lastName;
@@ -77,7 +77,7 @@ exports.login = async (req, res, next) => {
     );
 
     if (!userLogged) {
-      throw new Error("Votre compte n'existe pas avec ces identifiants");
+      throw new Error("Le compte n'existe pas avec ces identifiants");
     }
     if (!validPassword) {
       throw new Error("Mot de passe incorrect'");
@@ -135,7 +135,7 @@ exports.findAll = (req, res, next) => {
 exports.findOne = (req, res, next) => {
   const userId = req.params.id;
 
-  // Utilisation de findByPk pour obtenir une seule entrée de la DB avec la Primary Key
+  // Utilisation de findByPk pour obtenir une seule entrée de la DB avec la Primary Key (ID)
   User.findByPk(userId)
     .then((data) => {
       if (data) {

@@ -4,8 +4,9 @@ module.exports = (app) => {
   const express = require("express");
   const router = express.Router();
 
-  router.post("/users", userCtrl.signUp);
-  router.post("/users", userCtrl.login);
+  // Signup et Login
+  router.post("/signup", userCtrl.signup);
+  router.post("/login", userCtrl.login);
 
   //   Route de l'ajout d'un utilisateur
   router.post("/users", auth, userCtrl.create);
