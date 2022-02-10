@@ -1,10 +1,12 @@
-const db = require("../models/user");
-const User = db.User;
+const db = require("../models");
+const User = db.user;
 const Op = db.Sequelize.Op;
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
-// Inscription
+// Sign up
 exports.signup = async (req, res, next) => {
-  const params = req.body.params;
+  const params = req.body;
   const userName = params.name;
   const userLastName = params.lastName;
   const userEmail = params.email;
@@ -14,13 +16,13 @@ exports.signup = async (req, res, next) => {
   const pwdRegex =
     /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
 
-  // Si l'utilisateur est déjà dans la BD
+  // User already in DB
   const alreadyInUse = await User.findOne({
     attributes: ["email"],
     where: { email },
   });
 
-  //   Nouvel Utilisateur
+  // New User
   const newUser = await User.create({
     email: userEmail,
     password: await bcrypt.hash(userPwd, 10),
@@ -28,7 +30,7 @@ exports.signup = async (req, res, next) => {
     lastName: userLastName,
   });
 
-  //   Récupération du token
+  // Get Token
   const jwbToken =
     "Bearer " +
     jwt.sign({ id: newUser.id }, "JSON_TOKEN", { expiresIn: "24H" });
@@ -62,6 +64,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
+// Logging in
 exports.login = async (req, res, next) => {
   try {
     const email = req.body.email;
@@ -90,14 +93,13 @@ exports.login = async (req, res, next) => {
   }
 };
 
-// Insérer un nouvel Utilisateur
+// Create new User
 exports.create = (req, res, next) => {
   if (!req.body.name) {
     res.status(400).send({ message: "Le nom est requis pour vous inscrire" });
     return;
   }
 
-  //   Créer un nouvel Utilisateur
   const user = {
     name: req.body.name,
     firstName: req.body.firstName,
@@ -105,7 +107,7 @@ exports.create = (req, res, next) => {
     password: req.body.password,
   };
 
-  //   Créer et Sauvegarder l'utilisateur dans la DB
+  // Add user to DB
   User.create(user)
     .then((data) => {
       res.send(data);
@@ -115,7 +117,7 @@ exports.create = (req, res, next) => {
     });
 };
 
-// Récupérer tous les utilisateurs
+// Get All Users
 exports.findAll = (req, res, next) => {
   const name = req.query.name;
   var condition = name ? { name: { [Op.like]: `%{name}%` } } : null;
@@ -131,11 +133,11 @@ exports.findAll = (req, res, next) => {
     });
 };
 
-// Récupérer un seul utilisateur avec son ID
+// Get User with Id
 exports.findOne = (req, res, next) => {
   const userId = req.params.id;
 
-  // Utilisation de findByPk pour obtenir une seule entrée de la DB avec la Primary Key (ID)
+  // Use findByPk to get UserId with the primaryKey
   User.findByPk(userId)
     .then((data) => {
       if (data) {
@@ -153,7 +155,7 @@ exports.findOne = (req, res, next) => {
     });
 };
 
-// Mettre à jour un Utilisateur (Pseudo)
+// Update User profile
 exports.update = (req, res, next) => {
   const userId = req.params.id;
 
@@ -174,11 +176,11 @@ exports.update = (req, res, next) => {
     });
 };
 
-// Supprimer un profil Utilisateur
+// Delete User profile
 exports.delete = (req, res, next) => {
   const userID = req.params.id;
 
-  //   Utilisation de "destroy()" pour supprimer l'utilisateur de la DB
+  // User.destroy to delete the table in DB
   User.destroy({ where: { userID } })
     .then((num) => {
       if (num == 1) {

@@ -2,4 +2,5 @@
 images
 .env
 .vscode
-config.json
+config.json1
+controllerTest.js

@@ -1,27 +1,12 @@
-module.exports = (app) => {
-  const userCtrl = require("../controllers/users");
-  const auth = require("../middleware/auth");
-  const express = require("express");
-  const router = express.Router();
+const express = require("express");
+const router = express.Router();
+const userCtrl = require("../controllers/users");
 
-  // Signup et Login
-  router.post("/signup", userCtrl.signup);
-  router.post("/login", userCtrl.login);
+router.post("/signup", userCtrl.signup);
+router.post("/login", userCtrl.login);
+router.get("/user/profile/:id", userCtrl.findOne);
+router.get("/users", userCtrl.findAll);
+router.put("/user/update/:id", userCtrl.update);
+router.delete("user/delete/:id", userCtrl.delete);
 
-  //   Route de l'ajout d'un utilisateur
-  router.post("/users", auth, userCtrl.create);
-
-  //   Tous les utilisateurs
-  router.get("/users", auth, userCtrl.findAll);
-
-  //   Un seul utilisateurs
-  router.get("/users", auth, userCtrl.findOne);
-
-  //   MàJ Utilisateur
-  router.put("/users", auth, userCtrl.update);
-
-  //   SUpprimer un Utilisateur
-  router.delete("/users", auth, userCtrl.delete);
-
-  app.use("/users", auth, router);
-};
+module.exports = router;

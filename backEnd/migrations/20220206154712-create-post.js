@@ -9,15 +9,19 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       body: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       attachment: {
         type: Sequelize.STRING,
+        allowNull: true,
       },
       userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: "User",
