@@ -113,7 +113,9 @@ exports.create = (req, res, next) => {
       res.send(data);
     })
     .catch((error) => {
-      res.status(500).send({ error });
+      res.status(500).send({
+        message: error.message && "Impossible de créer cet Utilisateur",
+      });
     });
 };
 
@@ -137,7 +139,7 @@ exports.findAll = (req, res, next) => {
 exports.findOne = (req, res, next) => {
   const userId = req.params.id;
 
-  // Use findByPk to get UserId with the primaryKey
+  // Use findByPk to get userId with the primaryKey
   User.findByPk(userId)
     .then((data) => {
       if (data) {

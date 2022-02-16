@@ -7,6 +7,7 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        onDelete: "cascade",
       },
       title: {
         allowNull: false,
@@ -24,8 +25,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "User",
-          key: "userId",
+          model: "Users",
+          key: "id",
         },
       },
       createdAt: {

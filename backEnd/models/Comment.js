@@ -5,12 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Associate comments with userIs and PostIds
       models.Comment.belongsTo(models.User, {
-        foreignKey: { allowNull: false },
+        foreignKey: { name: "userId", allowNull: false },
       });
       models.Comment.belongsTo(
         models.Post,
         {
-          foreignKey: { allowNull: false },
+          foreignKey: { name: "userId", allowNull: false },
         },
         // Using "cascade" to delete related comments when the user/post is deleted
         { onDelete: "cascade" }
@@ -20,13 +20,14 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init(
     {
       body: { type: DataTypes.STRING, allowNull: false },
-      userId: { type: DataTypes.INTEGER, required: true },
-      postId: { type: DataTypes.INTEGER, required: true },
+      userId: { type: DataTypes.INTEGER, allowNull: false },
+      postId: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       sequelize,
       modelName: "Comment",
     }
   );
+
   return Comment;
 };

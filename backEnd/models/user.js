@@ -4,7 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     // Create a One-to-many relationship between User and Post
     static associate(models) {
-      models.User.hasMany(models.Post);
+      models.User.hasMany(models.Post, {
+        sourceKey: "id",
+        foreignKey: "id",
+      });
     }
   }
   User.init(
@@ -30,5 +33,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
+
   return User;
 };

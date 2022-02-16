@@ -9,8 +9,13 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: "postId" },
         { onDelete: "cascade" }
       );
+      console.log(models.User);
+
       // One User has many Post so Posts belongsTo User
-      models.Post.belongsTo(models.User), { as: "user", foreignKey: "userId" };
+      models.Post.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      console.log(models.Post);
     }
   }
   Post.init(

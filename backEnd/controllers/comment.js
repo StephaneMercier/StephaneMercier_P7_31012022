@@ -44,7 +44,9 @@ exports.getAllComments = async (req, res, next) => {
     });
   }
 };
+
 exports.updateComment = async (req, res, next) => {};
+
 exports.deleteComment = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -61,5 +63,7 @@ exports.deleteComment = async (req, res, next) => {
       where: { id },
     });
     res.status(200).send({ message: "Commentaire supprimé" });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
 };

@@ -16,21 +16,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "User",
-          key: "userId",
+          model: "Users",
+          key: "id",
         },
       },
       postId: {
         allowNull: false,
         type: Sequelize.INTEGER,
+        onDelete: "cascade",
         references: {
-          model: "Post",
-          key: "postId",
+          model: "Posts",
+          key: "id",
         },
       },
-      attachment: {
-        type: Sequelize.STRING,
-      },
+      // attachment: {
+      //   type: Sequelize.STRING,
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
