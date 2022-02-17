@@ -4,7 +4,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     queryInterface.addConstraint("Comments"),
       {
-        field: ["postId"],
+        fields: ["postId"],
         type: "foreignKey",
         name: "comment-post-association",
         onDelete: "cascade",
