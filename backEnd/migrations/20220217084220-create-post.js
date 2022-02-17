@@ -7,27 +7,15 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        onDelete: "cascade",
       },
       title: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       body: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       attachment: {
         type: Sequelize.STRING,
-        allowNull: true,
-      },
-      userId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id",
-        },
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +24,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      UserId: {
+        type: Sequelize.INTEGER,
       },
     });
   },

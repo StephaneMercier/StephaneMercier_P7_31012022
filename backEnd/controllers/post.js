@@ -84,6 +84,7 @@ exports.deletePostById = async (req, res, next) => {
         id,
       },
     });
+    console.log({ req });
     if (!postDelete) {
       throw new Error("Aucune publication à supprimer");
     }

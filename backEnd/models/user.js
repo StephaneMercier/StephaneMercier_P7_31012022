@@ -2,37 +2,29 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    // Create a One-to-many relationship between User and Post
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
     static associate(models) {
-      models.User.hasMany(models.Post, {
-        sourceKey: "id",
-        foreignKey: "id",
-      });
+      User.hasMany(models.Post);
+      User.hasMany(models.Comment);
+      // define association here
     }
   }
   User.init(
     {
-      name: { type: DataTypes.STRING, allowNull: false },
-      lastName: { type: DataTypes.STRING, allowNull: false, required: true },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        required: true,
-        unique: true,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        required: true,
-        unique: true,
-      },
-      isAdmin: { type: DataTypes.BOOLEAN, default: false },
+      name: DataTypes.STRING,
+      lastName: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      isAdmin: DataTypes.BOOLEAN,
     },
     {
       sequelize,
       modelName: "User",
     }
   );
-
   return User;
 };
