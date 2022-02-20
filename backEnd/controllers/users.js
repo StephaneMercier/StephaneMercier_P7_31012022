@@ -104,3 +104,51 @@ exports.logIn = async (req, res, next) => {
     res.status(400).json({ message: e.message });
   }
 };
+
+// Get User profile
+exports.getUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userFound = await User.findOne({ where: { id } });
+    res.status(200).json({ userFound });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+};
+
+// get All Users profiles
+exports.getAllUsers = async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    // Send HTTP response of all users datas
+    res.send(users);
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+};
+
+// Update User profile
+exports.updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await User.find({ where: { id } });
+    if (!user) {
+      throw new Error("Profile not found");
+    }
+    const userToUpdate = await User.update(
+      {
+        name: req.body.name,
+        last_name: req.body.lastName,
+      },
+      { where: { id } }
+    );
+    if (!userToUpdate) {
+      throw new Error("Unable to update this profile");
+    }
+    res
+      .status(200)
+      .json({ user: userToUpdate.isAdmin, message: "Profile updated" });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+};
