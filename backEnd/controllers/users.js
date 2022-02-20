@@ -1,9 +1,11 @@
+// The "Post" variable will be needed to delete the post on cascade when deleting the User
 const { User, Post } = require("../models");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-// Singing up for new profile
+// Signing up for new profile
 exports.signUp = async (req, res, next) => {
   const name = req.params.name;
   const lastName = req.params.lastName;
@@ -132,6 +134,8 @@ exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await User.find({ where: { id } });
+
+    // Throw error if profile is not found
     if (!user) {
       throw new Error("Profile not found");
     }
@@ -151,4 +155,21 @@ exports.updateUser = async (req, res, next) => {
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
+};
+
+// Delete User profile
+exports.deleteUser = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    //   Delete Post along with User profile
+    const deletePost = await Post.destroy({ where: { userId: id } });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+  try {
+    await User.destroy({ where: { id } });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+  res.status(200).json({ message: "Succesfully deleted this account" });
 };
