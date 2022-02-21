@@ -1,11 +1,15 @@
 <template>
-  <div id="nav">
-    <router to="/login"></router>
-  </div>
-  <router-view />
+  <Login></Login>
+
+  <!-- <router-view></router-view> -->
 </template>
 
-<script></script>
+<script>
+import Login from "./views/Login.vue";
+export default {
+  components: { Login },
+};
+</script>
 
 <style lang="scss">
 #app {
