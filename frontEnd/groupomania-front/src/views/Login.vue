@@ -15,7 +15,7 @@
           >Cliquez ici pour vous connecter)</span
         >
       </p>
-      <form action="submit" v-if="mode == 'login'">
+      <form v-if="mode == 'login'">
         <input
           id="email"
           v-model="email"
@@ -37,7 +37,7 @@
         </button>
       </form>
 
-      <form action="submit" v-else>
+      <form v-else>
         <input
           id="name"
           v-model="name"
@@ -72,7 +72,11 @@
         />
         <br />
 
-        <button class="btn btn-primary" :disabled="switchToDisabled()">
+        <button
+          @click="createAccount()"
+          class="btn btn-primary"
+          :disabled="switchToDisabled()"
+        >
           C'est parti !
         </button>
       </form>
@@ -82,6 +86,7 @@
 k
 
 <script>
+const axios = require("axios").default;
 export default {
   name: "Login",
   data() {
@@ -107,10 +112,25 @@ export default {
           this.password == "" ||
           this.name == "" ||
           this.lastName == ""
-        )
+        ) {
           return true;
-      } else if (this.mode == "login") {
-        if (this.email == "" || this.password == "") return true;
+        } else {
+          return false;
+        }
+      } else {
+        if (this.email == "" || this.password == "") {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    },
+    createAccount: async function () {
+      try {
+        const response = await axios.post("http://localhost:3000/api/user");
+        console.log(response);
+      } catch (error) {
+        console.error(error);
       }
     },
   },
