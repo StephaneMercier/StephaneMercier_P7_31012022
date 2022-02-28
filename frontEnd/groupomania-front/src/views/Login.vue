@@ -86,7 +86,6 @@
 k
 
 <script>
-const axios = require("axios").default;
 export default {
   name: "Login",
   data() {
@@ -118,20 +117,27 @@ export default {
           return false;
         }
       } else {
-        if (this.email == "" || this.password == "") {
-          return true;
-        } else {
-          return false;
+        if (this.mode == "login") {
+          if (this.email == "" || this.password == "") {
+            return true;
+          } else {
+            return false;
+          }
         }
       }
     },
     createAccount: async function () {
-      try {
-        const response = await axios.post("http://localhost:3000/api/user");
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
+      this.$store.dispatch("createAccount", {
+        name: this.name,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+      });
+      const form = document.querySelector("form");
+      const success = document.createElement("p");
+      success.classList.add("alert-success");
+      success.innerHTML = `Compte crée avec Succès`;
+      form.appendChild(success);
     },
   },
 };
