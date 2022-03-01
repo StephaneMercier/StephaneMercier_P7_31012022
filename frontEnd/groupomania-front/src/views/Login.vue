@@ -32,8 +32,12 @@
           required
         />
         <br />
-        <button class="btn btn-primary" :disabled="switchToDisabled()">
-          Connexion
+        <button
+          @click="loginAccount()"
+          class="btn btn-primary"
+          :disabled="switchDisabled()"
+        >
+          <span>Connexion</span>
         </button>
       </form>
 
@@ -75,7 +79,7 @@
         <button
           @click="createAccount()"
           class="btn btn-primary"
-          :disabled="switchToDisabled()"
+          :disabled="switchDisabled()"
         >
           C'est parti !
         </button>
@@ -104,7 +108,7 @@ export default {
     switchToLogin: function () {
       this.mode = "login";
     },
-    switchToDisabled: function () {
+    switchDisabled: function () {
       if (this.mode == "signup") {
         if (
           this.email == "" ||
@@ -127,20 +131,31 @@ export default {
       }
     },
     createAccount: async function () {
-      this.$store.dispatch("createAccount", {
+      await this.$store.dispatch("createAccount", {
         name: this.name,
         lastName: this.lastName,
         email: this.email,
         password: this.password,
       });
-      const form = document.querySelector("form");
-      const success = document.createElement("p");
-      success.classList.add("alert-success");
-      success.innerHTML = `Compte crée avec Succès`;
-      form.appendChild(success);
+    },
+    loginAccount: async function () {
+      await this.$store.dispatch("loginAccount", {
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style lang="css" scoped>
+.container {
+  background-image: url(../assets/icon.png);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+</style>

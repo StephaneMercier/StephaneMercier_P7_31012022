@@ -1,7 +1,8 @@
 <template>
-  <Login></Login>
-
-  <!-- <router-view></router-view> -->
+  <div>
+    <Login></Login>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

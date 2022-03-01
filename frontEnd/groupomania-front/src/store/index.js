@@ -26,5 +26,22 @@ export default createStore({
       //   console.log(e);
       // }
     },
+    loginAccount: ({ commit }, userLog) => {
+      commit;
+      instance
+        .post("/login", userLog)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // try {
+      //   const res = await instance.post("/login", userLog);
+      //   console.log(res);
+      // } catch (e) {
+      //   console.log(e);
+      // }
+    },
   },
 });
