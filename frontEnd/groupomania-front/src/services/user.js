@@ -21,10 +21,14 @@ class UserService {
   }
   async login() {
     try {
-      const response = await instance.post("/login", {
-        email: this.email,
-        password: this.password,
-      });
+      const response = await instance.post(
+        "/login",
+        {
+          email: this.email,
+          password: this.password,
+        },
+        { headers: authHeader() }
+      );
       console.log(response);
     } catch (e) {
       console.log({ message: e.message });

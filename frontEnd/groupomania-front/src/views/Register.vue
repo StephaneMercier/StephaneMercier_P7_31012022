@@ -90,7 +90,7 @@ export default {
           password: this.password,
         });
         console.log(response);
-        this.$router.push("/profile");
+        this.$router.push("/login");
       } catch (e) {
         console.log({ message: e.message });
       }

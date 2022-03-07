@@ -37,6 +37,7 @@
 </template>
 
 <script>
+// import authHeaders from "../services/authHeader";
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:3000" });
 export default {
@@ -50,14 +51,15 @@ export default {
   methods: {
     async loginAccount() {
       try {
-        const response = await instance.post("/login", {
+        const res = await instance.post("/login", {
           email: this.email,
           password: this.password,
         });
-        console.log(response);
-        this.$router.push("/profile");
+        if (res.data.tokenConnect) {
+          localStorage.setItem("user", JSON.stringify(res.data));
+        }
       } catch (e) {
-        console.log({ message: e.message });
+        console.log({ message: e.message && "erreur récupération Token" });
       }
     },
     goToSignup() {
