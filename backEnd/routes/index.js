@@ -1,7 +1,14 @@
 const userRoute = require("../routes/users");
 const postRoute = require("../routes/post");
+const commentRoute = require("../routes/comment");
 
-module.exports = (app) => {
-  app.use("/groupomania", userRoute);
-  app.use("/groupomania", postRoute);
-};
+const express = require("express");
+const router = express.Router();
+
+router.use(userRoute);
+router.use(postRoute);
+router.use(commentRoute);
+
+// PETIT COQUIN ! <3
+
+module.exports = router;

@@ -1,24 +1,24 @@
 // The "Post" variable will be needed to delete the post on cascade when deleting the User
 const { User, Post } = require("../models");
-
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // Signing up for new profile
 exports.signUp = async (req, res, next) => {
-  const name = req.params.name;
-  const lastName = req.params.lastName;
+  const name = req.body.name;
+  const lastName = req.body.lastName;
   const email = req.body.email;
   const password = req.body.password;
+  const admin = req.body.isAdmin;
   const regexMail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const regexPwd =
     /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
   try {
     //   Throw error for missing fields
-    if (!email && !password && !name && !lastName) {
-      throw new Error("Please fill all fields");
+    if (!email || !password || !name || !lastName) {
+      throw new Error("Please fill all fields required");
     }
     // Throw error for failed email regex
     if (!regexMail.test(email)) {
@@ -30,7 +30,7 @@ exports.signUp = async (req, res, next) => {
         "Password format not valid (Must contain at least: 1 Capital, 1 number and 1 special character"
       );
     }
-    // Check if the User is already registered (via email)
+    // Check if the User is already registered (via email)...
     const isUser = await User.findOne({
       attributes: ["email"],
       where: { email },
@@ -39,11 +39,13 @@ exports.signUp = async (req, res, next) => {
       throw new Error("This account already exists");
     }
 
+    // ...if not create the User
     const newUser = await User.create({
       email,
       password: await bcrypt.hash(password, 10),
       name,
       lastName,
+      admin,
     });
     if (!newUser) {
       throw new Error("An error occured when creating your profile");
@@ -76,7 +78,7 @@ exports.logIn = async (req, res, next) => {
 
     // Thorw error if User is not signed up
     if (!user) {
-      throw new Error("Account not found, please Sign Up");
+      throw new Error("Account not found, please Sign in first");
     }
 
     const validPwd = await bcrypt.compare(password, user.password);
@@ -111,10 +113,10 @@ exports.logIn = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const userFound = await User.findOne({ where: { id } });
     res.status(200).json({ userFound });
-    console.log(userFound);
+    // console.log(userFound);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
@@ -125,8 +127,8 @@ exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
     // Send HTTP response of all users datas
-    res.send(users);
-    console.log(users);
+    res.json(users);
+    // console.log(users);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
@@ -136,7 +138,7 @@ exports.getAllUsers = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const user = await User.find({ where: { id } });
+    const user = await User.findOne({ where: { id } });
 
     // Throw error if profile is not found
     if (!user) {
@@ -164,8 +166,14 @@ exports.updateUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    //   Delete Post along with User profile
+    //   Delete Post(s) along with User profile
     const deletePost = await Post.destroy({ where: { userId: id } });
+    if (!deletePost) {
+      throw new Error("No post(s) related to this User");
+    }
+    res
+      .status(200)
+      .json({ message: "All posts related to this profile have been deleted" });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

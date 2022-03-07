@@ -1,15 +1,11 @@
 <template>
   <div>
-    <Login></Login>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Login from "./views/Login.vue";
-export default {
-  components: { Login },
-};
+export default {};
 </script>
 
 <style lang="scss">
@@ -29,7 +25,7 @@ export default {
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #41c489;
     }
   }
 }

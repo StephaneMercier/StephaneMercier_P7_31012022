@@ -32,6 +32,20 @@ exports.getAllPosts = async (req, res, next) => {
   }
 };
 
+// Get post by userID
+exports.getUserPost = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userPost = await Post.findOne({ userId: id });
+    if (!userPost) {
+      throw new Error("No Post related to this User were found");
+    }
+    res.status(200).send({ userPost });
+  } catch (e) {
+    res.status(400).json({ message: e.message });
+  }
+};
+
 // Update post
 exports.updatePost = async (req, res, next) => {
   try {

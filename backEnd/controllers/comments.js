@@ -23,7 +23,7 @@ exports.deleteComment = async (req, res, next) => {
     const { id } = req.params.id;
     const commentToDelete = await Comment.destroy({ where: { id } });
     if (!commentToDelete) {
-      throw new Error("Unable to delete this comment");
+      throw new Error("Unable to find the comment to delete");
     }
     res.status(200).json({ message: "Comment deleted successfully" });
   } catch (e) {
