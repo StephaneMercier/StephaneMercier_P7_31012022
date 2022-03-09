@@ -6,34 +6,6 @@ const instance = axios.create({
 });
 
 class UserService {
-  async create() {
-    try {
-      const response = await instance.post("/signup", {
-        name: this.name,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-      });
-      console.log(response);
-    } catch (e) {
-      console.log({ message: e.message });
-    }
-  }
-  async login() {
-    try {
-      const response = await instance.post(
-        "/login",
-        {
-          email: this.email,
-          password: this.password,
-        },
-        { headers: authHeader() }
-      );
-      console.log(response);
-    } catch (e) {
-      console.log({ message: e.message });
-    }
-  }
   getUser(id) {
     try {
       return instance.get("/user/profile/" + id, { headers: authHeader() });
@@ -48,7 +20,7 @@ class UserService {
       console.log({ message: e.message });
     }
   }
-  //   update(userId) {}
+  //  delete(userId) {}
   deleteProfile(id) {
     try {
       return instance.delete("/user/delete/" + id, { headers: authHeader() });

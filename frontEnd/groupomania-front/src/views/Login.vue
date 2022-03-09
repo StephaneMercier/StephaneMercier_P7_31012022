@@ -37,30 +37,27 @@
 </template>
 
 <script>
-// import authHeaders from "../services/authHeader";
-import axios from "axios";
-const instance = axios.create({ baseURL: "http://localhost:3000" });
+import authService from "../services/authService";
+
 export default {
   data() {
     return {
       email: "",
       password: "",
-      success: false,
     };
   },
   methods: {
-    async loginAccount() {
-      try {
-        const res = await instance.post("/login", {
-          email: this.email,
-          password: this.password,
-        });
-        if (res.data.tokenConnect) {
-          localStorage.setItem("user", JSON.stringify(res.data));
-        }
-      } catch (e) {
-        console.log({ message: e.message && "erreur récupération Token" });
-      }
+    loginAccount() {
+      authService.logIn(this.email, this.password).then((response) => {
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            token: response.data.tokenConnect,
+            id: response.data.id,
+          })
+        ),
+          this.$router.push("/profile/" + response.data.id);
+      });
     },
     goToSignup() {
       this.$router.push("/register");

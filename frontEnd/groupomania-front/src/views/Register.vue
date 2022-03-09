@@ -53,10 +53,11 @@
 </template>
 
 <script>
-import axios from "axios";
-const instance = axios.create({
-  baseURL: "http://localhost:3000",
-});
+// import axios from "axios";
+import authService from "../services/authService.js";
+// const instance = axios.create({
+//   baseURL: "http://localhost:3000",
+// });
 
 export default {
   data() {
@@ -81,16 +82,11 @@ export default {
     },
   },
   methods: {
-    async createAccount() {
+    createAccount() {
       try {
-        const response = await instance.post("/signup", {
-          name: this.name,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-        });
-        console.log(response);
-        this.$router.push("/login");
+        authService
+          .signUp(this.name, this.lastName, this.email, this.password)
+          .then((response) => console.log(response.data));
       } catch (e) {
         console.log({ message: e.message });
       }
