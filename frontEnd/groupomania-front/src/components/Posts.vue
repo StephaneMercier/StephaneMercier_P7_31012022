@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import auth from "../services/auth";
 import userService from "../services/user";
 import axios from "axios";
 const instance = axios.create({ baseURL: "http://localhost:3000" });
@@ -28,26 +27,10 @@ export default {
     return {
       posts: [],
       body: "",
-      changes: 0,
     };
   },
-  beforeMount() {
-    this.getAllPosts();
-  },
   methods: {
-    publishPost() {
-      if (this.body != "") {
-        try {
-          instance.post(
-            "/post/create",
-            { body: this.body },
-            { headers: { Authorization: "Bearer" + this.$auth.accessToken } }
-          );
-        } catch (e) {
-          console.log({ message: e.message });
-        }
-      }
-    },
+    publishPost() {},
   },
 };
 </script>

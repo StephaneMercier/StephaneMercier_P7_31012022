@@ -1,9 +1,11 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Feed from "../views/Feed";
-import Home from "../views/Home";
+// import Home from "../views/Home";
 import Profile from "../views/Profile";
 import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
+import Post from "../views/Post.vue";
+import UpdatePost from "../views/UpdatePost.vue";
 
 // Récupération du token pour le beforeEnter
 function checkToken() {
@@ -16,7 +18,7 @@ function checkToken() {
 const routes = [
   { path: "/register", name: "Register", component: Register },
   { path: "/login", name: "Login", component: Login },
-  { path: "/", name: "Home", component: Home },
+  // { path: "/", name: "Home", component: Home },
   {
     path: "/feed",
     name: "Feed",
@@ -35,6 +37,30 @@ const routes = [
     path: "/profile/:id",
     name: "Profile",
     component: Profile,
+    beforeEnter: (to, from, next) => {
+      if (!checkToken()) {
+        next({ path: "/login" });
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/post/:postId",
+    name: "DisplayPost",
+    component: Post,
+    beforeEnter: (to, from, next) => {
+      if (!checkToken()) {
+        next({ path: "/login" });
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path: "/post/edit/:postId",
+    name: "PostEdit",
+    component: UpdatePost,
     beforeEnter: (to, from, next) => {
       if (!checkToken()) {
         next({ path: "/login" });
