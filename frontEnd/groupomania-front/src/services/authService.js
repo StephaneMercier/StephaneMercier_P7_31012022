@@ -1,4 +1,5 @@
 import axios from "axios";
+const TOKEN_KEY = "token";
 const instance = axios.create({
   baseURL: "http://localhost:3000",
   headers: {
@@ -15,6 +16,6 @@ export default {
     return instance.post("/login", { email, password });
   },
   logout() {
-    localStorage.removeItem("user");
+    localStorage.removeItem(TOKEN_KEY);
   },
 };

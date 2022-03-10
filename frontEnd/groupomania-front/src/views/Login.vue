@@ -56,7 +56,7 @@ export default {
             id: response.data.id,
           })
         ),
-          this.$router.push("/profile/" + response.data.id);
+          this.$router.push("/profile/");
       });
     },
     goToSignup() {

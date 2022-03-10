@@ -3,7 +3,7 @@
     <h1>Mon Compte GROUPOMANIA</h1>
     <p class="profile-header">{{ name }} {{ lastName }}</p>
     <p v-for="post in posts" :key="post.id">
-      <a :href="`/post/${post.id}`">{{ post.title }}</a>
+      <a :href="`/post/${post.postId}`">{{ post.title }}</a>
     </p>
   </div>
 </template>
@@ -21,15 +21,21 @@ export default {
     };
   },
   methods: {
-    getUser() {
-      userService.getUser(this.$route.params.id).then((response) => {
+    async getUser() {
+      let token = localStorage.getItem("token");
+      const { id } = JSON.parse(token);
+      console.log(id);
+
+      userService.getUser(id).then((response) => {
         console.log(response.data);
         this.name = response.data.userFound.name;
         this.lastName = response.data.userFound.lastName;
       });
     },
     getUserPost() {
-      userService.getUserPost(this.$route.params.id).then((response) => {
+      let token = localStorage.getItem("token");
+      const { id } = JSON.parse(token);
+      userService.getUserPost(id).then((response) => {
         console.log(response.data);
         this.posts = response.data.userPosts;
       });

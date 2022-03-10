@@ -25,11 +25,16 @@ export default {
   },
   methods: {},
   mounted() {
-    postService.showPost(this.$route.params.postId).then((response) => {
-      console.log(response.data);
-      this.post.title = response.data.postDetails.title;
-      this.post.body = response.data.postDetails.body;
-    });
+    postService
+      .showPost(this.$route.params.postId)
+      .then((response) => {
+        console.log(response.data);
+        this.post.title = response.data.postDetails.title;
+        this.post.body = response.data.postDetails.body;
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
   },
 };
 </script>

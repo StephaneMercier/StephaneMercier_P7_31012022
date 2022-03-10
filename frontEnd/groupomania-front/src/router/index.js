@@ -23,57 +23,32 @@ const routes = [
     path: "/feed",
     name: "Feed",
     component: Feed,
-    // Protection des routes si le token n'existe pas
-    beforeEnter: (to, from, next) => {
-      if (!checkToken()) {
-        next({ path: "/login" });
-        // Si token présent, redirection vers la route demandée
-      } else {
-        next();
-      }
-    },
   },
   {
-    path: "/profile/:id",
+    path: "/profile",
     name: "Profile",
     component: Profile,
-    beforeEnter: (to, from, next) => {
-      if (!checkToken()) {
-        next({ path: "/login" });
-      } else {
-        next();
-      }
-    },
   },
   {
     path: "/post/:postId",
     name: "DisplayPost",
     component: Post,
-    beforeEnter: (to, from, next) => {
-      if (!checkToken()) {
-        next({ path: "/login" });
-      } else {
-        next();
-      }
-    },
   },
   {
     path: "/post/edit/:postId",
     name: "PostEdit",
     component: UpdatePost,
-    beforeEnter: (to, from, next) => {
-      if (!checkToken()) {
-        next({ path: "/login" });
-      } else {
-        next();
-      }
-    },
   },
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+});
+router.beforeEach(async (to, from, next) => {
+  if (to.name !== "Login" && !checkToken()) next({ name: "Login" });
+  if (to.name == "Login" && checkToken()) next({ name: "Profile" });
+  else next();
 });
 
 export default router;
