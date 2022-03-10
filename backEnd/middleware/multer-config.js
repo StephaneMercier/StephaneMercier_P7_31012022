@@ -3,7 +3,7 @@ const MIME_TYPES = {
   "image/jpg": "jpg",
   "image/jpeg": "jpeg",
   "image/png": "png",
-  "image/gif": "GIF",
+  "image/gif": "gif",
 };
 
 const storeImg = multer.diskStorage({

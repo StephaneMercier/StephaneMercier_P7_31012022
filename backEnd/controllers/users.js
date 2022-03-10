@@ -113,10 +113,8 @@ exports.logIn = async (req, res, next) => {
 exports.getUser = async (req, res, next) => {
   try {
     const { id } = req.params;
-    // console.log(id);
     const userFound = await User.findOne({ where: { id } });
     res.status(200).json({ userFound });
-    // console.log(userFound);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }

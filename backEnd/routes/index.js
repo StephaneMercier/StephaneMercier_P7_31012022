@@ -9,6 +9,4 @@ router.use(userRoute);
 router.use(postRoute);
 router.use(commentRoute);
 
-// PETIT COQUIN ! <3
-
 module.exports = router;

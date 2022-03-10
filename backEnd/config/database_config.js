@@ -1,4 +1,3 @@
-// require("dotenv").config();
 // Configuring parameters for MySql connection and Sequelize
 module.exports = {
   HOST: "localhost",

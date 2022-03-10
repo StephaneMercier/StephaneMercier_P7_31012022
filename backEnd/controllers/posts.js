@@ -32,15 +32,37 @@ exports.getAllPosts = async (req, res, next) => {
   }
 };
 
+// Get post detail by postId
+exports.showPost = async (req, res, next) => {
+  try {
+    const { postId } = req.params;
+    const postDetails = await Post.findOne({
+      where: { id: postId },
+    });
+    if (!postDetails) {
+      throw new Error("No post to display");
+    }
+    res.status(200).send({ postDetails });
+  } catch (e) {
+    console.log({ message: e.message });
+  }
+};
+
 // Get post by userID
 exports.getUserPost = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userPost = await Post.findOne({ userId: id });
-    if (!userPost) {
+    console.log("param userID", id);
+    const userPosts = await Post.findAll({
+      where: {
+        userId: id,
+      },
+    });
+    // const userPosts = await Post.findAll({ userId: id });
+    if (!userPosts) {
       throw new Error("No Post related to this User were found");
     }
-    res.status(200).send({ userPost });
+    res.status(200).send({ userPosts });
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
