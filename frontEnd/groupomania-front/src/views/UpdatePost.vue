@@ -7,7 +7,7 @@
       <label for="">Publication</label>
       <input type="text" v-model="post.body" />
     </form>
-
+    <br />
     <button class="btn btn-primary">Publier</button>
   </div>
 </template>

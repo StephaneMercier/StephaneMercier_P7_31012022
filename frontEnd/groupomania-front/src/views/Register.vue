@@ -53,11 +53,7 @@
 </template>
 
 <script>
-// import axios from "axios";
 import authService from "../services/authService.js";
-// const instance = axios.create({
-//   baseURL: "http://localhost:3000",
-// });
 
 export default {
   data() {
