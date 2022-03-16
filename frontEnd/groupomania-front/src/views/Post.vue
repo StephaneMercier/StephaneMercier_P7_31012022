@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1>test post</h1>
-    <p>{{ post.id }} {{ post.title }} {{ post.body }}</p>
+    <div>{{ post.title }} {{ post.body }}</div>
+    <div><input type="text" v-model="body" /><button>Commenter</button></div>
   </div>
 </template>
 
@@ -11,8 +12,11 @@ export default {
   data() {
     return {
       post: {},
+      body: "",
     };
   },
+  createComment() {},
+  getAllComments() {},
   mounted() {
     postService.showPost(this.$route.params.postId).then((response) => {
       console.log(response.data);

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1 class="text-center">GROUPOMANIA - Votre réseau social d'entreprise</h1>
     <div class="container">
       <div class="card-container">
         <h1 class="card-title">Connexion</h1>
@@ -8,35 +7,36 @@
           (Pas encore inscrit ? Cliquez
           <span @click="goToSignup()">ICI</span> pour créer votre compte)
         </p>
-
-        <form class="form-horizontal">
-          <input
-            id="email"
-            v-model="email"
-            type="email"
-            class="form-control"
-            placeholder="Adresse mail :"
-            required
-          />
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            class="form-control"
-            placeholder="Mot de passe :"
-            required
-          />
-          <br />
-          <button @click="loginAccount()" class="btn btn-primary">
-            Me connecter
-          </button>
-        </form>
+        <div class="container-form">
+          <form class="form-horizontal">
+            <input
+              id="email"
+              v-model="email"
+              type="email"
+              class="form-control"
+              placeholder="Adresse mail :"
+              required
+            />
+            <input
+              id="password"
+              v-model="password"
+              type="password"
+              class="form-control"
+              placeholder="Mot de passe :"
+              required
+            />
+          </form>
+        </div>
+        <button @click="loginAccount()" class="btn btn-primary">
+          Me connecter
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import authService from "../services/authService";
 
 export default {
@@ -56,7 +56,10 @@ export default {
             id: response.data.id,
           })
         ),
-          this.$router.push("/profile/");
+          (axios.defaults.headers.common = {
+            Authorization: `bearer ${response.data.tokenConnect}`,
+          });
+        this.$router.push("/profile/");
       });
     },
     goToSignup() {
@@ -67,7 +70,59 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  background-image: url(../assets/icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+.card-title {
+  border-bottom: 1px solid #d3545c;
+  margin-top: 1.4rem;
+}
+.card-subtitle {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+}
+.container-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+.form-horizontal {
+  width: 20rem;
+  margin-top: -10rem;
+}
+
+.form-control {
+  border: 1px solid #2f3542;
+  border-radius: 20px;
+  margin: 10px;
+}
 span {
-  color: blue;
+  color: #fff;
+  background-color: #d3545c;
+  border: 1px solid #d3545c;
+  border-radius: 60%;
+  margin: 3px;
+  padding: 3px;
+  cursor: pointer;
+  &:hover {
+    color: #fff;
+    background-color: #2f3542;
+    border: 1px solid #2f3542;
+  }
+}
+
+.btn-primary {
+  background-color: #d3545c;
+  border: 1px solid #d3545c;
+  margin-top: -20rem;
+  border-radius: 20px;
+  &:hover {
+    background-color: #2f3542;
+    border: 1px solid #2f3542;
+  }
 }
 </style>

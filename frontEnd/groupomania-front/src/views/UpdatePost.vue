@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <p>test update</p>
+  <div class="container">
     <form method="post">
       <label for="">TITRE </label>
       <input type="text" v-model="post.title" />
@@ -8,7 +7,7 @@
       <input type="text" v-model="post.body" />
     </form>
     <br />
-    <button class="btn btn-primary">Publier</button>
+    <button @click="updatePost()" class="btn btn-primary">Publier</button>
   </div>
 </template>
 
@@ -23,7 +22,15 @@ export default {
       },
     };
   },
-  methods: {},
+  methods: {
+    updatePost() {
+      postService
+        .updatePost(this.$route.params.postId, this.post.title, this.post.body)
+        .then(() => {
+          this.$router.push("/profile");
+        });
+    },
+  },
   mounted() {
     postService
       .showPost(this.$route.params.postId)
@@ -39,4 +46,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  min-height: 100vh;
+}
+</style>

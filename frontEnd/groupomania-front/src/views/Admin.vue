@@ -1,21 +1,24 @@
 <template>
   <div class="container">
-    <div v-for="post in posts" :key="post.id">
+    <p v-for="post in posts" :key="post.id">
       {{ post.title }}
       {{ post.body }}
       {{ post.User.name }}
       {{ post.User.lastName }}
-    </div>
+      <button class="btn btn-danger" @click="deletePost(post.id)">
+        Supprimer
+      </button>
+    </p>
   </div>
 </template>
 
 <script>
 import postService from "../services/postService";
+
 export default {
   data() {
     return {
       posts: [],
-      // users: [],
     };
   },
   async mounted() {
@@ -27,12 +30,13 @@ export default {
         this.posts = response.data.allPosts;
       });
     },
+    async deletePost(id) {
+      await postService.deletePost(id).then(() => {
+        this.getAllPosts();
+      });
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.container {
-  min-height: 100vh;
-}
-</style>
+<style lang="scss" scoped></style>
