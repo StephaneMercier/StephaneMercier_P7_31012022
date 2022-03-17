@@ -4,10 +4,10 @@
       <div class="profile-header">
         <h1>Mon Compte</h1>
         <h2 class="profile-title">{{ name }} {{ lastName }}</h2>
+        <a class="btn btn-secondary" href="/admin">Page Administrateur</a>
         <button class="btn btn-delete" @click="deleteUserProfile">
           Supprimer mon compte
         </button>
-        <a href="/admin">Page Administrateur</a>
       </div>
       <br />
       <div class="container-post">
@@ -42,6 +42,20 @@
         maxlength="255"
       ></textarea>
       <button @click="createPost()" class="btn btn-secondary">Publier</button>
+      <alert
+        v-if="(showDismissibleAlert = true)"
+        v-model="showDismissibleAlert"
+        class="alert alert-danger"
+        variant="danger"
+        dismissible
+      >
+        Veuillez remplir tous les champs pour publier
+      </alert>
+      <button @click="showDismissibleAlert = false" variant="info" class="m-1">
+        Show dismissible alert ({{
+          showDismissibleAlert ? "visible" : "hidden"
+        }})
+      </button>
     </div>
   </div>
 </template>
@@ -59,6 +73,7 @@ export default {
       posts: [],
       title: "",
       body: "",
+      showDismissibleAlert: false,
     };
   },
   methods: {
@@ -84,6 +99,9 @@ export default {
         this.getUserPost();
         this.title = "";
         this.body = "";
+        if (this.title == "" || this.body == "") {
+          this.showDismissibleAlert = true;
+        }
       });
     },
     async deletePost(id) {
@@ -146,7 +164,6 @@ h3 {
   flex-direction: column;
   margin-top: 4rem;
   padding: 0.5rem;
-  // border: 2px solid #d3545c;
   border-radius: 20px;
   min-height: 25vh;
 }
@@ -161,8 +178,8 @@ h3 {
   color: inherit;
   font-weight: bold;
   font-size: larger;
-  border: 1px solid #d3545c;
-  border-radius: 20px;
+  border-bottom: 1px solid #d3545c;
+
   padding: 3px;
   white-space: nowrap;
   margin: 0.5rem;
@@ -205,7 +222,7 @@ h3 {
   &.btn-delete {
     border: 1px solid #d3545c;
     background-color: #d3545c;
-    color: black;
+    color: #fff;
   }
   &.btn-info {
     color: white;

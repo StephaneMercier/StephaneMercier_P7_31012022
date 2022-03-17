@@ -5,6 +5,9 @@
       {{ post.body }}
       {{ post.User.name }}
       {{ post.User.lastName }}
+      <div v-for="comment in comments" :key="comment.id">
+        {{ comment.body }}
+      </div>
     </div>
   </div>
 </template>
@@ -15,7 +18,7 @@ export default {
   data() {
     return {
       posts: [],
-      // users: [],
+      comments: [],
     };
   },
   async mounted() {
@@ -24,7 +27,10 @@ export default {
   methods: {
     async getAllPosts() {
       await postService.showAllPosts().then((response) => {
+        console.log(response.data);
         this.posts = response.data.allPosts;
+        this.comments = response.data.allComments;
+        console.log(this.comments);
       });
     },
   },

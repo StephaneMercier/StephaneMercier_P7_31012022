@@ -61,19 +61,19 @@ export default {
       password: "",
     };
   },
-  computed: {
-    validateFields() {
-      if (
-        this.name == "" ||
-        this.lastName == "" ||
-        this.email == "" ||
-        this.password == ""
-      ) {
-        return true;
-      }
-      return false;
-    },
-  },
+  // computed: {
+  //   validateFields() {
+  //     if (
+  //       this.name == "" ||
+  //       this.lastName == "" ||
+  //       this.email == "" ||
+  //       this.password == ""
+  //     ) {
+  //       return true;
+  //     }
+  //     return false;
+  //   },
+  // },
   methods: {
     createAccount() {
       try {
