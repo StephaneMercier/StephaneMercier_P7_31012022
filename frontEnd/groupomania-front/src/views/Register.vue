@@ -10,36 +10,48 @@
         <form class="form-horizontal">
           <input
             id="name"
-            v-model="name"
+            v-model="state.name"
             type="text"
             class="form-control"
             placeholder="Prénom :"
             required
           />
+          <span class="alert-message" v-if="v$.name.$error">
+            {{ v$.name.$errors[0].$message }}
+          </span>
           <input
             id="lastName"
-            v-model="lastName"
+            v-model="state.lastName"
             type="text"
             class="form-control"
             placeholder="Nom :"
             required
           />
+          <span class="alert-message" v-if="v$.lastName.$error">
+            {{ v$.lastName.$errors[0].$message }}
+          </span>
           <input
             id="email"
-            v-model="email"
+            v-model="state.email"
             type="email"
             class="form-control"
             placeholder="Adresse mail :"
             required
           />
+          <span class="alert-message" v-if="v$.email.$error">
+            {{ v$.email.$errors[0].$message }}
+          </span>
           <input
             id="password"
-            v-model="password"
+            v-model="state.password"
             type="password"
             class="form-control"
             placeholder="Mot de passe :"
             required
           />
+          <span class="alert-message" v-if="v$.password.$error">
+            {{ v$.password.$errors[0].$message }}
+          </span>
         </form>
       </div>
       <button @click="createAccount()" class="btn btn-primary">
@@ -50,35 +62,59 @@
 </template>
 
 <script>
+import { reactive, computed } from "vue";
+import useValidate from "@vuelidate/core";
+import { required, email, helpers } from "@vuelidate/validators";
 import authService from "../services/authService.js";
 
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       name: "",
       lastName: "",
       email: "",
       password: "",
-    };
+    });
+
+    const rules = computed(() => {
+      return {
+        name: {
+          required: helpers.withMessage("Champ non renseigné", required),
+        },
+        lastName: {
+          required: helpers.withMessage("Champ non renseigné", required),
+        },
+        email: {
+          required: helpers.withMessage("Format invalide", required),
+          email,
+        },
+        password: {
+          required: helpers.withMessage(
+            "min 8 caractères (1 capitale et 1 spécial)",
+            required
+          ),
+        },
+      };
+    });
+    const v$ = useValidate(rules, state);
+    return { state, v$ };
   },
-  // computed: {
-  //   validateFields() {
-  //     if (
-  //       this.name == "" ||
-  //       this.lastName == "" ||
-  //       this.email == "" ||
-  //       this.password == ""
-  //     ) {
-  //       return true;
-  //     }
-  //     return false;
-  //   },
-  // },
   methods: {
     createAccount() {
+      this.v$.$validate();
+      // if (!this.v$.$error) {
+      //   alert("form submitted");
+      // } else {
+      //   alert("form failed submission");
+      // }
       try {
         authService
-          .signUp(this.name, this.lastName, this.email, this.password)
+          .signUp(
+            this.state.name,
+            this.state.lastName,
+            this.state.email,
+            this.state.password
+          )
           .then((response) => console.log(response.data));
       } catch (e) {
         console.log({ message: e.message });
@@ -134,12 +170,20 @@ span {
     background-color: #2f3542;
     border: 1px solid #2f3542;
   }
+  &.alert-message {
+    padding: 0.3rem;
+    border: 1px solid #2f3542;
+    background-color: grey;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
+  }
 }
 
 .btn-primary {
   background-color: #d3545c;
   border: 1px solid #d3545c;
-  margin-top: -5rem;
+  margin-top: -1.5rem;
   border-radius: 20px;
   &:hover {
     background-color: #2f3542;
