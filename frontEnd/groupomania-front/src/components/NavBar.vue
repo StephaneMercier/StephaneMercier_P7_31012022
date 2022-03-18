@@ -31,46 +31,43 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (max-width: 768px) {
+  // * {
+  //   margin: 0;
+  //   padding: 0;
+  // }
   .navbar {
     background-color: #d3545c;
+    opacity: 0.8;
     margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
   }
-}
 
-* {
-  margin: 0;
-  padding: 0;
-}
-.navbar {
-  background-color: #d3545c;
-  opacity: 0.8;
-  margin-bottom: 2rem;
-}
-
-.nav-img {
-  height: 15rem;
-  width: 15rem;
-  margin: -50px 0 -40px 10px;
-}
-.nav-links {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 80%;
-}
-.nav-link {
-  padding: 0 10px;
-  text-decoration: none;
-  color: #000;
-  font-size: 1.2rem;
-
-  font-weight: bold;
-  border: 1px solid #fff;
-  border-radius: 20px;
-  background-color: #fff;
-  &:hover {
-    color: #fff;
-    background-color: #2f3542;
+  .nav-img {
+    height: 15rem;
+    width: 15rem;
+    margin: -50px 0 -40px 10px;
+  }
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .nav-link {
+    padding: 0 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+    &:hover {
+      color: #fff;
+      background-color: #2f3542;
+    }
   }
 }
 
@@ -79,42 +76,42 @@ export default {
     background-color: #d3545c;
     margin-bottom: 2rem;
   }
-}
 
-* {
-  margin: 0;
-  padding: 0;
-}
-.navbar {
-  background-color: #d3545c;
-  opacity: 0.8;
-  margin-bottom: 2rem;
-}
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  .navbar {
+    background-color: #d3545c;
+    opacity: 0.8;
+    margin-bottom: 2rem;
+  }
 
-.nav-img {
-  height: 15rem;
-  width: 15rem;
-  margin: -50px 0 -40px 10px;
-}
-.nav-links {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 80%;
-}
-.nav-link {
-  padding: 0 10px;
-  text-decoration: none;
-  color: #000;
-  font-size: 1.2rem;
+  .nav-img {
+    height: 15rem;
+    width: 15rem;
+    margin: -50px 0 -40px 10px;
+  }
+  .nav-links {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+  }
+  .nav-link {
+    padding: 0 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2rem;
 
-  font-weight: bold;
-  border: 1px solid #fff;
-  border-radius: 20px;
-  background-color: #fff;
-  &:hover {
-    color: #fff;
-    background-color: #2f3542;
+    font-weight: bold;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    background-color: #fff;
+    &:hover {
+      color: #fff;
+      background-color: #2f3542;
+    }
   }
 }
 </style>

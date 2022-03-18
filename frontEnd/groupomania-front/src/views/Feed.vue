@@ -6,15 +6,19 @@
       </p>
       <p class="post-main__body">{{ post.body }}</p>
       <div class="date-info">
-        <p>Publié par :{{ post.User.name }} {{ post.User.lastName }}</p>
-        <p>le : {{ dateFormat(post.createdAt) }}</p>
+        <p>
+          Publié par :{{ post.User.name }} {{ post.User.lastName }} le :
+          {{ dateFormat(post.createdAt) }}
+        </p>
       </div>
-      <div v-for="comment in comments" :key="comment.id">
-        {{ post.comment.body }}
+      <div class="display-comment" v-for="item in post.Comments" :key="item.id">
+        {{ item.body }} {{ item.createdAt }}
       </div>
       <div>
-        <input class="post-main__comment" type="text" v-model="body" />
-        <button class="btn btn-secondary">Commenter</button>
+        <input class="post-main__comment" type="text" v-model="commentBody" />
+        <button class="btn btn-secondary" @click="createComment(post.id)">
+          Commenter
+        </button>
       </div>
     </div>
   </div>
@@ -22,11 +26,12 @@
 
 <script>
 import postService from "../services/postService";
+import commentService from "../services/commentService";
 export default {
   data() {
     return {
       posts: [],
-      comments: [],
+      commentBody: "",
     };
   },
   async mounted() {
@@ -37,7 +42,6 @@ export default {
       await postService.showAllPosts().then((response) => {
         console.log(response.data);
         this.posts = response.data.allPosts;
-        console.log(this.comments);
       });
     },
     dateFormat(date) {
@@ -50,6 +54,13 @@ export default {
         minute: "numeric",
       };
       return event.toLocaleDateString("fr-FR", options);
+    },
+    createComment(id) {
+      commentService.createComment(id, this.commentBody).then((response) => {
+        console.log(response.data);
+        this.getAllPosts();
+        this.commentBody = "";
+      });
     },
   },
 };
@@ -87,6 +98,9 @@ export default {
       border: 1px solid #2f3542;
       border-radius: 20px;
     }
+  }
+  .display-comment {
+    color: black;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar></NavBar>
+    <NavBar v-if="$route.meta.requiresNavBar"></NavBar>
     <router-view></router-view>
     <Footer></Footer>
   </div>

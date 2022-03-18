@@ -2,6 +2,14 @@
   <div>
     <h1>test post</h1>
     <div>{{ post.title }} {{ post.body }}</div>
+    <!-- <div class="display-comment" v-for="item in post.Comments" :key="item.id">
+        {{ item.body }} {{ item.createdAt }}
+      </div>
+      <div>
+        <input class="post-main__comment" type="text" v-model="commentBody" />
+        <button class="btn btn-secondary" @click="createComment(post.id)">
+          Commenter
+        </button> -->
   </div>
 </template>
 

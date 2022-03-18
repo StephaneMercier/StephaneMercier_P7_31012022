@@ -18,14 +18,25 @@ function checkToken() {
   return token;
 }
 const routes = [
-  { path: "/", name: "Home", component: Home },
-  { path: "/register", name: "Register", component: Register },
-  { path: "/login", name: "Login", component: Login },
+  { path: "/", name: "Home", component: Home, meta: { requiresNavBar: false } },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    meta: { requiresNavBar: true },
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: { requiresNavBar: true },
+  },
 
   {
     path: "/feed",
     name: "Feed",
     component: Feed,
+    meta: { requiresNavBar: true },
     beforeEnter: (to, from, next) => {
       if (!checkToken()) next({ name: "Login" });
       else next();
@@ -35,6 +46,7 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+    meta: { requiresNavBar: true },
     beforeEnter: (to, from, next) => {
       if (!checkToken()) next({ name: "Login" });
       else next();
@@ -44,6 +56,7 @@ const routes = [
     path: "/post/:postId",
     name: "DisplayPost",
     component: Post,
+    meta: { requiresNavBar: true },
     beforeEnter: (to, from, next) => {
       if (!checkToken()) next({ name: "Login" });
       else next();
@@ -53,6 +66,7 @@ const routes = [
     path: "/post/edit/:postId",
     name: "PostEdit",
     component: UpdatePost,
+    meta: { requiresNavBar: true },
     beforeEnter: (to, from, next) => {
       if (to.name !== "Login" && !checkToken()) next({ name: "Login" });
       else next();
@@ -62,6 +76,7 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: Admin,
+    meta: { requiresNavBar: true },
     beforeEnter: (to, from, next) => {
       const getToken = localStorage.getItem("token");
       const { id } = JSON.parse(getToken);

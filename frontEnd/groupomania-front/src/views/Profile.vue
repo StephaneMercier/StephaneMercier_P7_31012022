@@ -12,17 +12,22 @@
       <br />
       <div class="container-post">
         <h3>Mes Publications :</h3>
-        <p v-for="post in posts" :key="post.id" class="post-info">
+        <p class="h3-subtitle">
+          (Cliquez sur le titre pour voir la publication)
+        </p>
+        <div v-for="post in posts" :key="post.id" class="post-info">
           <a :href="`/post/${post.id}`" class="post-title__link">{{
             post.title
           }}</a>
-          <a :href="`/post/edit/${post.id}`" class="btn btn-secondary"
-            >Modifier</a
-          >
-          <button class="btn btn-danger" @click="deletePost(post.id)">
-            Supprimer
-          </button>
-        </p>
+          <div class="post-buttons">
+            <a :href="`/post/edit/${post.id}`" class="btn btn-secondary"
+              >Modifier</a
+            >
+            <button class="btn btn-danger" @click="deletePost(post.id)">
+              Supprimer
+            </button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="post-creation">
@@ -120,10 +125,9 @@ export default {
 
 <style lang="scss" scoped>
 /* // Small screens */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768.02px) {
   .container {
     margin: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -151,10 +155,17 @@ export default {
   }
   .post-info {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
     padding: 0.4rem;
   }
+  .post-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
   .post-title__link {
     text-decoration: none;
     color: inherit;
@@ -249,9 +260,15 @@ export default {
   }
   .post-info {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     padding: 0.4rem;
+  }
+  .post-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
   }
   .post-title__link {
     text-decoration: none;
@@ -259,9 +276,10 @@ export default {
     font-weight: bold;
     font-size: larger;
     border-bottom: 1px solid #d3545c;
-
-    padding: 3px;
     white-space: nowrap;
+    &:hover {
+      color: #d3545c;
+    }
   }
   .container-header-post {
     width: 30%;

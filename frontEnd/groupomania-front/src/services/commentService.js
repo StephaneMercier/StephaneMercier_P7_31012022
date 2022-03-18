@@ -1,15 +1,29 @@
-// import axios from "axios";
-// import authHeader from "../services/authHeader";
-// const instance = axios.create({
-//   baseURL: "http://localhost:3000",
-//   headers: {
-//     accept: "application/json",
-//     contentType: "application/json",
-//   },
-// });
+import axios from "axios";
+import authHeader from "../services/authHeader";
+const instance = axios.create({
+  baseURL: "http://localhost:3000",
+  headers: {
+    accept: "application/json",
+    contentType: "application/json",
+  },
+});
 
-// export default {
-//   getAllComments() {
-//     return instance.get("/");
-//   },
-// };
+function getUserId() {
+  const getToken = localStorage.getItem("token");
+  const { id } = JSON.parse(getToken);
+  return id;
+}
+
+export default {
+  createComment(postId, body) {
+    const userId = getUserId();
+    console.log(userId);
+    return instance.post(
+      "/post/" + postId + "/comments",
+      { userId, postId, body },
+      {
+        headers: authHeader(),
+      }
+    );
+  },
+};

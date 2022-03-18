@@ -14,12 +14,6 @@ function getUserId() {
   return id;
 }
 
-// const getToken = localStorage.getItem("token");
-// const { token } = JSON.parse(getToken);
-// const config = {
-//   headers: { Authorization: "Bearer " + token },
-// };
-
 export default {
   createPost(postTitle, postBody) {
     const userId = getUserId();
