@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Feed from "../views/Feed";
-import Profile from "../views/Profile";
+import Home from "../views/Home.vue";
+import Feed from "../views/Feed.vue";
+import Profile from "../views/Profile.vue";
 import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
 import Post from "../views/Post.vue";
@@ -8,7 +9,7 @@ import UpdatePost from "../views/UpdatePost.vue";
 import Admin from "../views/Admin.vue";
 import userService from "../services/userService";
 
-// Récupération du token pour le beforeEach
+// Récupération du token pour le beforeEnter
 function checkToken() {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -17,6 +18,7 @@ function checkToken() {
   return token;
 }
 const routes = [
+  { path: "/", name: "Home", component: Home },
   { path: "/register", name: "Register", component: Register },
   { path: "/login", name: "Login", component: Login },
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <footer>
+    <footer role="contentinfo">
       <ul>
         <li>Groupomania Cie</li>
         <br />
@@ -16,6 +16,8 @@ export default {};
 
 <style lang="scss" scoped>
 * {
+  margin: 0;
+  padding: 0;
   list-style-type: none;
   font-size: 1.2rem;
   font-weight: bold;

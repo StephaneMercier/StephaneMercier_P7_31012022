@@ -64,7 +64,7 @@
 <script>
 import { reactive, computed } from "vue";
 import useValidate from "@vuelidate/core";
-import { required, email, helpers } from "@vuelidate/validators";
+import { required, email, helpers, minLength } from "@vuelidate/validators";
 import authService from "../services/authService.js";
 
 export default {
@@ -85,13 +85,14 @@ export default {
           required: helpers.withMessage("Champ non renseigné", required),
         },
         email: {
-          required: helpers.withMessage("Format invalide", required),
-          email,
+          required: helpers.withMessage("Champ non renseigné", required),
+          email: helpers.withMessage("Format invalide", email),
         },
         password: {
-          required: helpers.withMessage(
-            "min 8 caractères (1 capitale et 1 spécial)",
-            required
+          required: helpers.withMessage("Champ non renseigné", required),
+          minLength: helpers.withMessage(
+            "Min 8 caractères (1 capitale, 1 spécial)",
+            minLength(8)
           ),
         },
       };
@@ -102,11 +103,6 @@ export default {
   methods: {
     createAccount() {
       this.v$.$validate();
-      // if (!this.v$.$error) {
-      //   alert("form submitted");
-      // } else {
-      //   alert("form failed submission");
-      // }
       try {
         authService
           .signUp(
@@ -115,7 +111,7 @@ export default {
             this.state.email,
             this.state.password
           )
-          .then((response) => console.log(response.data));
+          .then(() => this.$router.push("/login"));
       } catch (e) {
         console.log({ message: e.message });
       }

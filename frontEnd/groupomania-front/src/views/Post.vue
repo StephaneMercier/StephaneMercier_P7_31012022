@@ -2,7 +2,6 @@
   <div>
     <h1>test post</h1>
     <div>{{ post.title }} {{ post.body }}</div>
-    <div><input type="text" v-model="body" /><button>Commenter</button></div>
   </div>
 </template>
 

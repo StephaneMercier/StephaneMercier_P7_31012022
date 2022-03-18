@@ -11,20 +11,26 @@
           <form class="form-horizontal">
             <input
               id="email"
-              v-model="email"
+              v-model="state.email"
               type="email"
               class="form-control"
               placeholder="Adresse mail :"
               required
             />
+            <span class="alert-message" v-if="v$.email.$error">
+              {{ v$.email.$errors[0].$message }}
+            </span>
             <input
               id="password"
-              v-model="password"
+              v-model="state.password"
               type="password"
               class="form-control"
               placeholder="Mot de passe :"
               required
             />
+            <span class="alert-message" v-if="v$.password.$error">
+              {{ v$.password.$errors[0].$message }}
+            </span>
           </form>
         </div>
         <button @click="loginAccount()" class="btn btn-primary">
@@ -38,29 +44,60 @@
 <script>
 import axios from "axios";
 import authService from "../services/authService";
+import { reactive, computed } from "vue";
+import useValidate from "@vuelidate/core";
+import { required, email, helpers, minLength } from "@vuelidate/validators";
 
 export default {
-  data() {
-    return {
+  setup() {
+    const state = reactive({
       email: "",
       password: "",
-    };
+    });
+
+    const rules = computed(() => {
+      return {
+        email: {
+          required: helpers.withMessage("Champ non renseigné", required),
+          email: helpers.withMessage("Format invalide", email),
+        },
+        password: {
+          required: helpers.withMessage("Champ non renseigné", required),
+          minLength: helpers.withMessage("Mot de passe invalide", minLength(8)),
+        },
+      };
+    });
+    const v$ = useValidate(rules, state);
+    return { state, v$ };
   },
+  // data() {
+  //   return {
+  //     email: "",
+  //     password: "",
+  //   };
+  // },
   methods: {
     loginAccount() {
-      authService.logIn(this.email, this.password).then((response) => {
-        localStorage.setItem(
-          "token",
-          JSON.stringify({
-            token: response.data.tokenConnect,
-            id: response.data.id,
-          })
-        ),
-          (axios.defaults.headers.common = {
-            Authorization: `bearer ${response.data.tokenConnect}`,
+      this.v$.$validate();
+      try {
+        authService
+          .logIn(this.state.email, this.state.password)
+          .then((response) => {
+            localStorage.setItem(
+              "token",
+              JSON.stringify({
+                token: response.data.tokenConnect,
+                id: response.data.id,
+              })
+            ),
+              (axios.defaults.headers.common = {
+                Authorization: `bearer ${response.data.tokenConnect}`,
+              });
+            this.$router.push("/profile/");
           });
-        this.$router.push("/profile/");
-      });
+      } catch (e) {
+        console.log({ message: e.message });
+      }
     },
     goToSignup() {
       this.$router.push("/register");
@@ -112,6 +149,14 @@ span {
     color: #fff;
     background-color: #2f3542;
     border: 1px solid #2f3542;
+  }
+  &.alert-message {
+    padding: 0.3rem;
+    border: 1px solid #2f3542;
+    background-color: grey;
+    border-radius: 20px;
+    font-size: medium;
+    font-weight: bold;
   }
 }
 
