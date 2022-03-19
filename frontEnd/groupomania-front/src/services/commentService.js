@@ -17,7 +17,7 @@ function getUserId() {
 export default {
   createComment(postId, body) {
     const userId = getUserId();
-    console.log(userId);
+    console.log("userId du commentaire : ", userId);
     return instance.post(
       "/post/" + postId + "/comments",
       { userId, postId, body },
@@ -25,5 +25,10 @@ export default {
         headers: authHeader(),
       }
     );
+  },
+  deleteComment(postId, id) {
+    return instance.delete("/post/" + postId + "/delete/comments/" + id, {
+      headers: authHeader(),
+    });
   },
 };

@@ -1,18 +1,28 @@
 <template>
   <div class="container">
     <div class="post-container" v-for="post in posts" :key="post.id">
+      <p class="post-header">
+        Publié par :{{ post.User.name }} {{ post.User.lastName }}, le :
+        {{ dateFormat(post.createdAt) }}
+      </p>
       <p class="post-main__title">
         {{ post.title }}
       </p>
       <p class="post-main__body">{{ post.body }}</p>
-      <div class="date-info">
-        <p>
-          Publié par :{{ post.User.name }} {{ post.User.lastName }} le :
-          {{ dateFormat(post.createdAt) }}
+      <div class="date-info"></div>
+      <div
+        class="display-comment"
+        v-for="comment in post.Comments"
+        :key="comment.id"
+      >
+        <p class="comment-body">
+          {{ comment.body }}
+          <button class="btn btn-danger" @click="deleteComment(post.id)">
+            Supprimer
+          </button>
         </p>
-      </div>
-      <div class="display-comment" v-for="item in post.Comments" :key="item.id">
-        {{ item.body }} {{ item.createdAt }}
+
+        <p class="comment-info">{{ dateFormat(comment.createdAt) }}</p>
       </div>
       <div>
         <input class="post-main__comment" type="text" v-model="commentBody" />
@@ -62,45 +72,66 @@ export default {
         this.commentBody = "";
       });
     },
+    deleteComment(id) {
+      commentService.deleteComment(id).then((response) => {
+        console.log(response.data);
+      });
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@media only screen and (min-width: 768.98px) {
-  .container {
-    min-height: 100vh;
+.container {
+  min-height: 100vh;
+  margin: 0;
+}
+.post-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.post-header {
+  border-bottom: 3px solid #2f3542;
+  font-weight: bold;
+}
+.post-main {
+  &__title {
+    width: 50%;
+    border: 2px solid #2f3542;
+    border-radius: 20px;
+    text-align: left;
+    padding: 10px;
+    margin-bottom: -2px;
   }
-  .post-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  &__body {
+    width: 60%;
+    height: 100px;
+    border: 2px solid #2f3542;
+    border-radius: 20px;
+    text-align: left;
+    padding: 10px;
   }
-  .post-main {
-    &__title {
-      width: 30%;
-      border: 1px solid #2f3542;
-      border-radius: 20px;
-      text-align: left;
-      padding: 10px;
-    }
-    &__body {
-      width: 60%;
-      height: 100px;
-      border: 1px solid #2f3542;
-      border-radius: 20px;
-      text-align: left;
-      padding: 10px;
-    }
-    &__comment {
-      margin-bottom: 2rem;
-      border: 1px solid #2f3542;
-      border-radius: 20px;
-    }
+  &__comment {
+    margin-bottom: 2rem;
+    border: 1px solid #2f3542;
+    border-radius: 20px;
   }
-  .display-comment {
-    color: black;
-  }
+}
+.display-comment {
+  color: black;
+  margin-bottom: 2rem;
+}
+.comment-body {
+  padding-left: 5px;
+  margin-bottom: -2px;
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #d3545c;
+  overflow: hidden;
 }
 </style>

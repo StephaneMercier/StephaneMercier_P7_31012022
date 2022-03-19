@@ -1,6 +1,9 @@
 <template>
   <div class="main">
-    <h1 class="home-title">BIENVENUE SUR LE RESEAU SOCIAL GROUPOMANIA</h1>
+    <h1 class="home-title">
+      BIENVENUE SUR LE RESEAU SOCIAL GROUPOMANIA <br />
+      (Version Beta)
+    </h1>
     <div class="home-links">
       <router-link class="link signup" to="/register">Inscription</router-link>
       <router-link class="link login" to="/login">Connexion</router-link>
@@ -23,10 +26,13 @@ export default {};
   justify-content: center;
 }
 .home-title {
-  font-size: xxxxx-large;
+  font-size: xx-large;
   font-weight: bolder;
   height: 9rem;
-  margin-bottom: -80px;
+  margin-bottom: -50px;
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+  }
 }
 .home-links {
   margin-top: 3rem;

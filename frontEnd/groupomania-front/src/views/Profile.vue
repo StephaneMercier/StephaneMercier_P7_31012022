@@ -4,7 +4,9 @@
       <div class="profile-header">
         <h1>Mon Compte</h1>
         <h2 class="profile-title">{{ name }} {{ lastName }}</h2>
-        <a class="btn btn-secondary" href="/admin">Page Administrateur</a>
+        <a v-if="isAdmin != null" class="btn btn-secondary" href="/admin"
+          >Page Administrateur</a
+        >
         <button class="btn btn-delete" @click="deleteUserProfile">
           Supprimer mon compte
         </button>
@@ -48,7 +50,13 @@
         size="large"
         maxlength="255"
       ></textarea>
-      <button @click="createPost()" class="btn btn-secondary">Publier</button>
+      <button
+        :disabled="!title.length || !body.length"
+        @click="createPost()"
+        class="btn btn-secondary"
+      >
+        Publier
+      </button>
     </div>
   </div>
 </template>
@@ -63,7 +71,7 @@ export default {
     return {
       name: "",
       lastName: "",
-      isAdmin: false,
+      isAdmin: null,
       posts: [],
       title: "",
       body: "",
@@ -74,6 +82,7 @@ export default {
       let token = localStorage.getItem("token");
       const { id } = JSON.parse(token);
       userService.getUser(id).then((response) => {
+        console.log(response.data);
         this.name = response.data.userFound.name;
         this.lastName = response.data.userFound.lastName;
         this.isAdmin = response.data.userFound.isAdmin;

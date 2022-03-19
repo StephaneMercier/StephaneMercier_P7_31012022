@@ -22,7 +22,6 @@ export default {
       "/post/create",
       { userId, title: postTitle, body: postBody },
       { headers: authHeader() }
-      // config
     );
   },
   showAllPosts() {
@@ -39,7 +38,6 @@ export default {
       "/post/update/" + postId,
       { title: postTitle, body: postBody },
       { headers: authHeader() }
-      // config
     );
   },
 

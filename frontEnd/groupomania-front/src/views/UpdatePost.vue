@@ -1,13 +1,16 @@
 <template>
   <div class="container">
-    <form method="post">
-      <label for="">TITRE </label>
-      <input type="text" v-model="post.title" />
-      <label for="">Publication</label>
-      <input type="text" v-model="post.body" />
-    </form>
+    <h1 class="post-header">Publication à modifier :</h1>
+    <div class="container-post">
+      <form method="post">
+        <label for="">Titre</label>
+        <input class="post-title" type="text" v-model="post.title" />
+        <label for="">Publication</label>
+        <input class="post-body" type="text" v-model="post.body" />
+      </form>
+    </div>
     <br />
-    <button @click="updatePost()" class="btn btn-primary">Publier</button>
+    <button @click="updatePost()" class="btn btn-secondary">Publier</button>
   </div>
 </template>
 
@@ -48,6 +51,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  margin: 0;
   min-height: 100vh;
+}
+.container-post {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 </style>
