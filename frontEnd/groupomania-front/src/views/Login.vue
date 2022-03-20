@@ -70,12 +70,6 @@ export default {
     const v$ = useValidate(rules, state);
     return { state, v$ };
   },
-  // data() {
-  //   return {
-  //     email: "",
-  //     password: "",
-  //   };
-  // },
   methods: {
     loginAccount() {
       this.v$.$validate();

@@ -16,14 +16,13 @@ export default {};
 
 <style lang="scss" scoped>
 * {
-  margin: 0;
-  padding: 0;
   list-style-type: none;
   font-size: 1.2rem;
   font-weight: bold;
+  font-style: italic;
 }
 div {
-  background-color: #2f3542;
+  background-color: #2d4567;
   height: 15vh;
   display: flex;
   flex-direction: column;

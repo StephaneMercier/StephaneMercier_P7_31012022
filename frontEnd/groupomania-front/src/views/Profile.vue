@@ -1,62 +1,64 @@
 <template>
-  <div class="container">
-    <div class="container-header-post">
-      <div class="profile-header">
-        <h1>Mon Compte</h1>
-        <h2 class="profile-title">{{ name }} {{ lastName }}</h2>
-        <a v-if="isAdmin != null" class="btn btn-secondary" href="/admin"
-          >Page Administrateur</a
-        >
-        <button class="btn btn-delete" @click="deleteUserProfile">
-          Supprimer mon compte
-        </button>
-      </div>
-      <br />
-      <div class="container-post">
-        <h3>Mes Publications :</h3>
-        <p class="h3-subtitle">
-          (Cliquez sur le titre pour voir la publication)
-        </p>
-        <div v-for="post in posts" :key="post.id" class="post-info">
-          <a :href="`/post/${post.id}`" class="post-title__link">{{
-            post.title
-          }}</a>
-          <div class="post-buttons">
-            <a :href="`/post/edit/${post.id}`" class="btn btn-secondary"
-              >Modifier</a
-            >
-            <button class="btn btn-danger" @click="deletePost(post.id)">
-              Supprimer
-            </button>
+  <div class="main">
+    <div class="container">
+      <div class="container-header-post">
+        <div class="profile-header">
+          <h1>Mon Compte</h1>
+          <h2 class="profile-title">{{ name }} {{ lastName }}</h2>
+          <a v-if="isAdmin != null" class="btn btn-secondary" href="/admin"
+            >Page Administrateur</a
+          >
+          <button class="btn btn-delete" @click="deleteUserProfile">
+            Supprimer mon compte
+          </button>
+        </div>
+        <br />
+        <div class="container-post">
+          <h3>Mes Publications :</h3>
+          <p class="h3-subtitle">
+            (Cliquez sur le titre pour voir la publication)
+          </p>
+          <div v-for="post in posts" :key="post.id" class="post-info">
+            <a :href="`/post/${post.id}`" class="post-title__link">{{
+              post.title
+            }}</a>
+            <div class="post-buttons">
+              <a :href="`/post/edit/${post.id}`" class="btn btn-secondary"
+                >Modifier</a
+              >
+              <button class="btn btn-danger" @click="deletePost(post.id)">
+                Supprimer
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="post-creation">
-      <h3 class="post-creation__info">Créer une publication :</h3>
-      <label for="title" class="title-label">Titre</label>
-      <textarea
-        id="textarea"
-        v-model="title"
-        rows="1"
-        maxlength="30"
-      ></textarea>
-      <label for="post" class="post-label">Contenu</label>
-      <textarea
-        id="textarea"
-        v-model="body"
-        placeholder="Quelque chose à partager ?"
-        rows="6"
-        size="large"
-        maxlength="255"
-      ></textarea>
-      <button
-        :disabled="!title.length || !body.length"
-        @click="createPost()"
-        class="btn btn-secondary"
-      >
-        Publier
-      </button>
+      <div class="post-creation">
+        <h3 class="post-creation__info">Créer une publication :</h3>
+        <label for="title" class="title-label">Titre</label>
+        <textarea
+          id="textarea"
+          v-model="title"
+          rows="1"
+          maxlength="30"
+        ></textarea>
+        <label for="post" class="post-label">Contenu</label>
+        <textarea
+          id="textarea"
+          v-model="body"
+          placeholder="Quelque chose à partager ?"
+          rows="6"
+          size="large"
+          maxlength="255"
+        ></textarea>
+        <button
+          :disabled="!title.length || !body.length"
+          @click="createPost()"
+          class="btn btn-secondary"
+        >
+          Publier
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -136,7 +138,7 @@ export default {
 /* // Small screens */
 @media only screen and (max-width: 768.02px) {
   .container {
-    margin: 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -227,16 +229,16 @@ export default {
 }
 /* // Desktops */
 @media only screen and (min-width: 768.98px) {
-  * {
-    margin: 0;
-    padding: 0;
-  }
   .container {
+    background-image: url(../assets/icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-top: 20px;
     min-height: 100vh;
     display: flex;
   }
   .profile-header {
-    border: 2px solid #d3545c;
+    border: 3px solid #d3545c;
     border-radius: 20px;
     min-height: 50vh;
     padding: 0.8rem;
@@ -254,7 +256,7 @@ export default {
     margin: 2rem 0 2rem 0;
   }
   .container-post {
-    border: 2px solid #d3545c;
+    border: 3px solid #d3545c;
     width: 200%;
     border-radius: 20px;
     display: flex;
@@ -301,7 +303,7 @@ export default {
     align-items: center;
     margin-left: 4rem;
     padding-top: 2.5rem;
-    border: 2px solid #d3545c;
+    border: 3px solid #d3545c;
     border-radius: 20px;
     height: 50vh;
     &__info {

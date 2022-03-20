@@ -1,15 +1,9 @@
 <template>
-  <div>
-    <h1>test post</h1>
-    <div>{{ post.title }} {{ post.body }}</div>
-    <!-- <div class="display-comment" v-for="item in post.Comments" :key="item.id">
-        {{ item.body }} {{ item.createdAt }}
-      </div>
-      <div>
-        <input class="post-main__comment" type="text" v-model="commentBody" />
-        <button class="btn btn-secondary" @click="createComment(post.id)">
-          Commenter
-        </button> -->
+  <div class="container">
+    <h1 class="post-header">
+      Votre publication du {{ dateFormat(post.createdAt) }}
+    </h1>
+    <div class="post-container">{{ post.title }} {{ post.body }}</div>
   </div>
 </template>
 
@@ -30,7 +24,28 @@ export default {
       this.post = response.data.postDetails;
     });
   },
+  methods: {
+    dateFormat(date) {
+      const event = new Date(date);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      return event.toLocaleDateString("fr-FR", options);
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  min-height: 100vh;
+}
+.post-header {
+  border-bottom: 2px solid #d3545c;
+  margin: 20px;
+}
+</style>

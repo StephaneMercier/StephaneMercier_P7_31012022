@@ -2,15 +2,20 @@
   <div class="container">
     <h1 class="post-header">Publication à modifier :</h1>
     <div class="container-post">
-      <form method="post">
-        <label for="">Titre</label>
-        <input class="post-title" type="text" v-model="post.title" />
-        <label for="">Publication</label>
-        <input class="post-body" type="text" v-model="post.body" />
+      <form class="post-update" method="post">
+        <label for="">Titre :</label>
+        <input class="post title" type="text" v-model="post.title" />
+        <label for="">Contenu :</label>
+        <input class="post body" type="text" v-model="post.body" />
       </form>
     </div>
-    <br />
-    <button @click="updatePost()" class="btn btn-secondary">Publier</button>
+    <button
+      :disabled="!post.title.length || !post.body.length"
+      @click="updatePost()"
+      class="btn btn-secondary"
+    >
+      Publier
+    </button>
   </div>
 </template>
 
@@ -51,12 +56,29 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin: 0;
+  padding-top: 20px;
   min-height: 100vh;
 }
-.container-post {
+.post-update {
   padding: 10px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.post {
+  border: 2px solid #2f3542;
+  border-radius: 20px;
+  width: 60%;
+  text-align: left;
+  padding: 10px;
+  &.title {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  &.body {
+    height: 20vh;
+    margin-bottom: 3px;
+  }
 }
 </style>

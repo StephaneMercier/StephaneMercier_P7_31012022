@@ -1,11 +1,12 @@
 <template>
   <div>
     <nav class="navbar" align="center">
-      <img
-        class="nav-img"
-        src="@/assets/icon-left-font-monochrome-white.png"
-        alt="logo Groupomania blanc"
-      />
+      <a href="/register">
+        <img
+          class="nav-img"
+          src="@/assets/icon-left-font-monochrome-white.png"
+          alt="logo Groupomania blanc"
+      /></a>
 
       <div class="nav-links">
         <router-link class="nav-link" to="/profile">Mon compte</router-link>
@@ -31,14 +32,9 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (max-width: 768px) {
-  // * {
-  //   margin: 0;
-  //   padding: 0;
-  // }
   .navbar {
     background-color: #d3545c;
     opacity: 0.8;
-    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
   }
@@ -73,18 +69,7 @@ export default {
 
 @media screen and (min-width: 768.98px) {
   .navbar {
-    background-color: #d3545c;
-    margin-bottom: 2rem;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-  }
-  .navbar {
-    background-color: #d3545c;
-    opacity: 0.8;
-    margin-bottom: 2rem;
+    background-color: #2d4567;
   }
 
   .nav-img {
@@ -110,7 +95,7 @@ export default {
     background-color: #fff;
     &:hover {
       color: #fff;
-      background-color: #2f3542;
+      background-color: #d3545c;
     }
   }
 }
