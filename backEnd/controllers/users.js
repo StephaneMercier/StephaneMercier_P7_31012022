@@ -162,18 +162,6 @@ exports.updateUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   const { id } = req.params;
   try {
-    //   Delete Post(s) along with User profile
-    const deletePost = await Post.destroy({ where: { id: id } });
-    if (!deletePost) {
-      throw new Error("No post(s) related to this User");
-    }
-    res
-      .status(200)
-      .json({ message: "All posts related to this profile have been deleted" });
-  } catch (e) {
-    res.status(400).json({ message: e.message });
-  }
-  try {
     await User.destroy({ where: { id: id } });
   } catch (e) {
     res.status(400).json({ message: e.message });

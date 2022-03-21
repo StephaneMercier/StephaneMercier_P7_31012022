@@ -19,10 +19,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      postId: {
+      PostId: {
         type: Sequelize.INTEGER,
+        references: { model: "Posts", key: "id" },
+        onDelete: "cascade",
       },
-      userId: { type: Sequelize.INTEGER },
+      UserId: {
+        type: Sequelize.INTEGER,
+        references: { model: "Users", key: "id" },
+        onDelete: "cascade",
+      },
     });
   },
   async down(queryInterface, Sequelize) {
