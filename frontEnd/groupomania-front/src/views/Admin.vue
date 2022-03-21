@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="header">
-      <h1 class="admin-page-title">Page Administrateur</h1>
-      <h2 class="admin-page-subtitle">(Modération des publications)</h2>
+      <h1 class="admin page-title">Page Administrateur</h1>
+      <h2 class="admin page-subtitle">(Modération des publications)</h2>
     </div>
     <div class="main">
       <div class="post-container" v-for="post in posts" :key="post.id">
@@ -65,18 +65,29 @@ export default {
 .container {
   min-height: 100vh;
   padding: 20px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .post-container {
   background-color: #fff;
   max-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 350px;
   border: 3px solid #2f3542;
   border-radius: 20px;
-  margin-bottom: 10px;
   padding: 15px 0;
   margin: 20px 20px;
+}
+.header {
+  margin: 30px;
+}
+.admin {
+  font-weight: bold;
 }
 .post {
   border: 2px solid #2f3542;

@@ -4,30 +4,22 @@
     <div class="container">
       <div class="post-container" v-for="post in posts" :key="post.id">
         <h2 class="post-header">
-          Publié par : {{ post.User.name }} {{ post.User.lastName }} ({{
-            dateFormat(post.createdAt)
-          }})
+          Publié par :
+          <span class="user-name"
+            >{{ post.User.name }} {{ post.User.lastName }}</span
+          >
+          ({{ dateFormat(post.createdAt) }})
         </h2>
         <p class="post-main__title">
-          {{ post.title }}
+          <a :href="`/post/${post.id}`">
+            {{ post.title }}
+          </a>
         </p>
-        <p class="post-main__body">{{ post.body }}</p>
-        <div class="comment-input">
-          <input
-            class="post-main__comment"
-            max-length="155"
-            type="text"
-            placeholder="Votre commentaire :"
-            v-model="commentBody"
-          />
-          <button
-            class="btn btn-secondary"
-            :disabled="!commentBody.length"
-            @click="createComment(post.id)"
-          >
-            Commenter
-          </button>
-        </div>
+        <textarea
+          disabled
+          class="post-main__body"
+          v-model="post.body"
+        ></textarea>
         <h2>Commentaires :</h2>
         <div class="comments-section">
           <div
@@ -35,12 +27,8 @@
             v-for="comment in post.Comments"
             :key="comment.id"
           >
-            <p class="comment-body">
-              {{ comment.body }}
-            </p>
-            <button class="btn btn-danger" @click="deleteComment(post.id)">
-              Supprimer
-            </button>
+            <textarea disabled class="comment-body" v-model="comment.body">
+            </textarea>
             <p class="comment-info">
               {{ dateFormat(comment.createdAt) }}
             </p>
@@ -54,18 +42,38 @@
 <script>
 import postService from "../services/postService";
 import commentService from "../services/commentService";
+import userService from "../services/userService";
 
 export default {
   data() {
     return {
       posts: [],
       commentBody: "",
+      userIsAdmin: null,
+      user: {},
     };
   },
   async mounted() {
+    console.log("connectedUserID :", this.connectedUserId);
     await this.getAllPosts();
+    await this.getUserInfo();
+  },
+  computed: {
+    connectedUserId() {
+      let token = localStorage.getItem("token");
+      const { id } = JSON.parse(token);
+      return id;
+    },
   },
   methods: {
+    getUserInfo() {
+      userService.getUser(this.connectedUserId).then((response) => {
+        console.log(response.data);
+        this.userIsAdmin = response.data.userFound.isAdmin;
+        this.user = response.data.userFound;
+        console.log("isAdmin ?", this.userIsAdmin);
+      });
+    },
     async getAllPosts() {
       await postService.showAllPosts().then((response) => {
         console.log(response.data);
@@ -93,6 +101,7 @@ export default {
     deleteComment(id) {
       commentService.deleteComment(id).then((response) => {
         console.log(response.data);
+        this.getAllPosts();
       });
     },
   },
@@ -127,15 +136,27 @@ h1 {
   padding-top: 5px;
 }
 .post-header {
+  margin: 10px 0;
   font-size: larger;
   border-bottom: 3px solid #2f3542;
 }
+.user-name {
+  color: #d3545c;
+  font-weight: bold;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: #d3545c;
+  }
+}
 .post-main {
   &__title {
+    font-weight: bold;
+    font-size: 1.5rem;
     width: 60%;
-    border: 2px solid #2f3542;
-    border-radius: 20px;
-    text-align: left;
+    text-align: center;
     padding: 10px;
     margin-bottom: 4px;
   }
@@ -161,32 +182,31 @@ h1 {
   align-items: center;
 }
 .comments-section {
+  display: flex;
+  flex-direction: column;
   padding: 10px;
   border: 2px solid #2f3542;
   border-radius: 20px;
   height: 30vh;
   width: 60%;
   white-space: nowrap;
-  overflow: hidden;
   overflow-y: auto;
   text-overflow: ellipsis;
   margin-bottom: 10px;
   @media only screen and (max-width: 768px) {
-    width: 60%;
+    width: 90%;
     height: 200px;
   }
 }
 .display-comment {
   margin-bottom: 2rem;
+  width: 100%;
 }
 .comment-body {
-  width: 60%;
+  width: 100%;
   padding-left: 5px;
-  margin: 4px 10px;
-
   display: flex;
   justify-content: flex-start;
-  align-items: center;
   border-radius: 20px;
   border: 1px solid #d3545c;
   overflow: hidden;

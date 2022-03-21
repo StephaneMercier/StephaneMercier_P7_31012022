@@ -9,6 +9,7 @@
       /></a>
 
       <div class="nav-links">
+        <!-- <i icon="fa-solid fa-user-secret" /> -->
         <router-link class="nav-link" to="/profile">Mon compte</router-link>
         <router-link class="nav-link" to="/feed">Fil d'actualité</router-link>
         <router-link class="nav-link" @click="logOut()" to="/login"

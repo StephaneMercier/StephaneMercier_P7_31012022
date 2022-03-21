@@ -26,8 +26,8 @@ export default {
       }
     );
   },
-  deleteComment(postId, id) {
-    return instance.delete("/post/" + postId + "/delete/comments/" + id, {
+  deleteComment(id) {
+    return instance.delete("/comments/" + id + "/delete", {
       headers: authHeader(),
     });
   },

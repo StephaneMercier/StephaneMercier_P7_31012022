@@ -15,9 +15,6 @@
         <br />
         <div class="container-post">
           <h3>Mes Publications :</h3>
-          <p class="h3-subtitle">
-            (Cliquez sur le titre pour voir la publication)
-          </p>
           <div v-for="post in posts" :key="post.id" class="post-info">
             <a :href="`/post/${post.id}`" class="post-title__link">{{
               post.title
@@ -138,6 +135,9 @@ export default {
 /* // Small screens */
 @media only screen and (max-width: 768.02px) {
   .container {
+    background-image: url(../assets/icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -158,6 +158,9 @@ export default {
   h1 {
     margin: 2rem;
     padding-bottom: 0.5rem;
+    border-bottom: 5px solid #d3545c;
+  }
+  h3 {
     border-bottom: 5px solid #d3545c;
   }
   .profile-title {

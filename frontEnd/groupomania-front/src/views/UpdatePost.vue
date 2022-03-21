@@ -4,9 +4,9 @@
     <div class="container-post">
       <form class="post-update" method="post">
         <label for="">Titre :</label>
-        <input class="post title" type="text" v-model="post.title" />
+        <textarea class="post title" type="text" v-model="post.title" />
         <label for="">Contenu :</label>
-        <input class="post body" type="text" v-model="post.body" />
+        <textarea class="post body" type="text" v-model="post.body" />
       </form>
     </div>
     <button
@@ -80,5 +80,9 @@ export default {
     height: 20vh;
     margin-bottom: 3px;
   }
+}
+.btn {
+  border-radius: 20px;
+  font-weight: bold;
 }
 </style>
