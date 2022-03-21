@@ -1,12 +1,12 @@
-const { User, Post } = require("../models");
+const { User, Post, Comment } = require("../models");
 
 // Create a Post
 exports.createPost = async (req, res, next) => {
   try {
-    const userId = req.user.id;
     const params = req.body;
     const newPost = await Post.create({
-      userId,
+      UserId: params.userId,
+      title: params.title,
       body: params.body,
     });
 
@@ -22,7 +22,10 @@ exports.createPost = async (req, res, next) => {
 // Get All Posts
 exports.getAllPosts = async (req, res, next) => {
   try {
-    const allPosts = await Post.findAll({});
+    const allPosts = await Post.findAll({
+      include: [{ model: User }, { model: Comment }],
+    });
+    // console.log(allPosts);
     if (!allPosts) {
       throw new Error("Unable to retrieve all posts");
     }
@@ -37,6 +40,7 @@ exports.showPost = async (req, res, next) => {
   try {
     const { postId } = req.params;
     const postDetails = await Post.findOne({
+      include: [{ model: Comment }],
       where: { id: postId },
     });
     if (!postDetails) {
@@ -52,13 +56,12 @@ exports.showPost = async (req, res, next) => {
 exports.getUserPost = async (req, res, next) => {
   try {
     const { id } = req.params;
-    console.log("param userID", id);
     const userPosts = await Post.findAll({
       where: {
         userId: id,
       },
     });
-    // const userPosts = await Post.findAll({ userId: id });
+
     if (!userPosts) {
       throw new Error("No Post related to this User were found");
     }
@@ -71,35 +74,34 @@ exports.getUserPost = async (req, res, next) => {
 // Update post
 exports.updatePost = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const findPostToUpdate = await Post.update({ where: { id } });
+    const { postId } = req.params;
+
+    const findPostToUpdate = await Post.findOne({ where: { id: postId } });
+
     if (!findPostToUpdate) {
       throw new Error("No post found");
     }
-    if (findPostToUpdate && findPostToUpdate.UserId !== req.user.id) {
-      res.status(400).json({ message: e.message });
+
+    if (findPostToUpdate && findPostToUpdate.UserId != req.body.userId) {
+      res.status(400).json({ message: "This post does not belong to you" });
     }
+
     await findPostToUpdate.update({
+      title: req.body.title,
       body: req.body.body,
-      userId: req.user.id,
+      userId: req.body.userId,
     });
-    res.status(201).send({ postUpdate, message: "Post updated successfully" });
-  } catch (e) {
-    res.status(500).json({ message: e.message });
+    res.status(201).send({ message: "Post updated successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
 // delete a Post
 exports.deletePost = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const findPost = await Post.findOne({ where: { id } });
-    if (
-      (findPost && findPost.userId == req.user.id) ||
-      req.user.isAdmin === true
-    ) {
-      Post.destroy({ where: { id: req.params.id } });
-    }
+    await Post.destroy({ where: { id: req.params.id } });
+
     res.status(200).send({ message: "Successfully deleted the post" });
   } catch (e) {
     res.status(500).json({ message: e.message });
