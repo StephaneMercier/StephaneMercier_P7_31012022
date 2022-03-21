@@ -25,7 +25,7 @@ exports.getAllPosts = async (req, res, next) => {
     const allPosts = await Post.findAll({
       include: [{ model: User }, { model: Comment }],
     });
-    // console.log(allPosts);
+
     if (!allPosts) {
       throw new Error("Unable to retrieve all posts");
     }

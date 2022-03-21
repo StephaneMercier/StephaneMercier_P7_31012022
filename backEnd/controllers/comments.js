@@ -3,13 +3,12 @@ const { Comment } = require("../models");
 // Create Comment
 exports.createComment = async (req, res, next) => {
   try {
-    // console.log("verif req.body", req.body);
     const newComment = await Comment.create({
       body: req.body.body,
       UserId: req.body.userId,
       PostId: req.body.postId,
     });
-    // console.log(newComment);
+
     if (!newComment) {
       throw new Error("Unable to post this comment");
     }

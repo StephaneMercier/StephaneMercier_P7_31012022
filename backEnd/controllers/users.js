@@ -124,9 +124,7 @@ exports.getUser = async (req, res, next) => {
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await User.findAll();
-    // Send HTTP response of all users datas
     res.json(users);
-    // console.log(users);
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
