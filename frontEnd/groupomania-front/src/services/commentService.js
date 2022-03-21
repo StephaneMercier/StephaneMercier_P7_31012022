@@ -17,7 +17,6 @@ function getUserId() {
 export default {
   createComment(postId, body) {
     const userId = getUserId();
-    console.log("userId du commentaire : ", userId);
     return instance.post(
       "/post/" + postId + "/comments",
       { userId, postId, body },

@@ -54,7 +54,6 @@ export default {
     };
   },
   async mounted() {
-    console.log("connectedUserID :", this.connectedUserId);
     await this.getAllPosts();
     await this.getUserInfo();
   },
@@ -68,15 +67,12 @@ export default {
   methods: {
     getUserInfo() {
       userService.getUser(this.connectedUserId).then((response) => {
-        console.log(response.data);
         this.userIsAdmin = response.data.userFound.isAdmin;
         this.user = response.data.userFound;
-        console.log("isAdmin ?", this.userIsAdmin);
       });
     },
     async getAllPosts() {
       await postService.showAllPosts().then((response) => {
-        console.log(response.data);
         this.posts = response.data.allPosts;
       });
     },
@@ -92,15 +88,13 @@ export default {
       return event.toLocaleDateString("fr-FR", options);
     },
     createComment(id) {
-      commentService.createComment(id, this.commentBody).then((response) => {
-        console.log(response.data);
+      commentService.createComment(id, this.commentBody).then(() => {
         this.getAllPosts();
         this.commentBody = "";
       });
     },
     deleteComment(id) {
-      commentService.deleteComment(id).then((response) => {
-        console.log(response.data);
+      commentService.deleteComment(id).then(() => {
         this.getAllPosts();
       });
     },

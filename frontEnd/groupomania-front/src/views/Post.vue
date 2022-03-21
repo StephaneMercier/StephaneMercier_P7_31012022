@@ -75,10 +75,6 @@ export default {
   },
   async mounted() {
     await this.getPost();
-    // await postService.showPost(this.$route.params.postId).then((response) => {
-    //   console.log(response.data);
-    //   this.post = response.data.postDetails;
-    // });
     await this.getUserInfo();
   },
   computed: {
@@ -91,16 +87,13 @@ export default {
   methods: {
     getPost() {
       postService.showPost(this.$route.params.postId).then((response) => {
-        console.log(response.data);
         this.post = response.data.postDetails;
       });
     },
     getUserInfo() {
       userService.getUser(this.connectedUserId).then((response) => {
-        console.log(response.data);
         this.userIsAdmin = response.data.userFound.isAdmin;
         this.user = response.data.userFound;
-        console.log("isAdmin ?", this.userIsAdmin);
       });
     },
     dateFormat(date) {
@@ -115,15 +108,13 @@ export default {
       return event.toLocaleDateString("fr-FR", options);
     },
     createComment(id) {
-      commentService.createComment(id, this.commentBody).then((response) => {
-        console.log(response.data);
+      commentService.createComment(id, this.commentBody).then(() => {
         this.getPost();
         this.commentBody = "";
       });
     },
     deleteComment(id) {
-      commentService.deleteComment(id).then((response) => {
-        console.log(response.data);
+      commentService.deleteComment(id).then(() => {
         this.getPost();
       });
     },

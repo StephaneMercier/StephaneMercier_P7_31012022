@@ -7,7 +7,7 @@
     <div class="main">
       <div class="post-container" v-for="post in posts" :key="post.id">
         <div class="post title">{{ post.title }}</div>
-        <div class="post body">{{ post.body }}</div>
+        <textarea class="post body" v-model="post.body"></textarea>
         <div class="user-info">
           Posté par :
           <span class="user-name"

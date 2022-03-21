@@ -81,7 +81,6 @@ export default {
       let token = localStorage.getItem("token");
       const { id } = JSON.parse(token);
       userService.getUser(id).then((response) => {
-        console.log(response.data);
         this.name = response.data.userFound.name;
         this.lastName = response.data.userFound.lastName;
         this.isAdmin = response.data.userFound.isAdmin;
@@ -91,13 +90,11 @@ export default {
       let token = localStorage.getItem("token");
       const { id } = JSON.parse(token);
       await userService.getUserPost(id).then((response) => {
-        console.log(response.data);
         this.posts = response.data.userPosts;
       });
     },
     createPost() {
-      postService.createPost(this.title, this.body).then((response) => {
-        console.log(response.data);
+      postService.createPost(this.title, this.body).then(() => {
         this.getUserPost();
         this.title = "";
         this.body = "";

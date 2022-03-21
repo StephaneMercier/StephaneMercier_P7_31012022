@@ -17,7 +17,6 @@ function getUserId() {
 export default {
   createPost(postTitle, postBody) {
     const userId = getUserId();
-    console.log("userId ici", userId);
     return instance.post(
       "/post/create",
       { userId, title: postTitle, body: postBody },
