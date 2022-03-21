@@ -63,7 +63,6 @@
 <script>
 import userService from "../services/userService";
 import postService from "../services/postService";
-import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -106,18 +105,11 @@ export default {
       });
     },
     deleteUserProfile() {
-      Swal.fire({
-        title: "Voulez-vous vraiment supprimer votre compte?",
-        showCancelButton: true,
-        confirmButtonText: "Oui je le veux",
-        cancelButtonText: "Non",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          userService.deleteUser().then(() => {
-            localStorage.removeItem("token");
-            this.$router.push("/register");
-          });
-        }
+      let token = localStorage.getItem("token");
+      const { id } = JSON.parse(token);
+      userService.deleteUser(id).then(() => {
+        localStorage.removeItem("token");
+        this.$router.push("/register");
       });
     },
   },
