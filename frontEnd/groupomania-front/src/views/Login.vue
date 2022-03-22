@@ -8,6 +8,7 @@
           <span @click="goToSignup()">ICI</span> pour créer votre compte)
         </p>
         <div class="container-form">
+          <label for="email" style="opacity: 0">n</label>
           <form class="form-horizontal">
             <input
               id="email"
@@ -20,6 +21,7 @@
             <span class="alert-message" v-if="v$.email.$error">
               {{ v$.email.$errors[0].$message }}
             </span>
+            <label for="password" style="opacity: 0">n</label>
             <input
               id="password"
               v-model="state.password"

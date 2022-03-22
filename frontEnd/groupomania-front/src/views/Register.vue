@@ -7,6 +7,7 @@
         connecter à votre compte)
       </p>
       <div class="container-form">
+        <label for="name" style="opacity: 0">n</label>
         <form class="form-horizontal">
           <input
             id="name"
@@ -19,6 +20,7 @@
           <span class="alert-message" v-if="v$.name.$error">
             {{ v$.name.$errors[0].$message }}
           </span>
+          <label for="lastName" style="opacity: 0">n</label>
           <input
             id="lastName"
             v-model="state.lastName"
@@ -30,6 +32,7 @@
           <span class="alert-message" v-if="v$.lastName.$error">
             {{ v$.lastName.$errors[0].$message }}
           </span>
+          <label for="email" style="opacity: 0">n</label>
           <input
             id="email"
             v-model="state.email"
@@ -41,6 +44,7 @@
           <span class="alert-message" v-if="v$.email.$error">
             {{ v$.email.$errors[0].$message }}
           </span>
+          <label for="password" style="opacity: 0">n</label>
           <input
             id="password"
             v-model="state.password"

@@ -10,11 +10,11 @@
           >
           ({{ dateFormat(post.createdAt) }})
         </h2>
-        <p class="post-main__title">
+        <h3 class="post-main__title">
           <a :href="`/post/${post.id}`">
             {{ post.title }}
           </a>
-        </p>
+        </h3>
         <label for="body">-----------------</label>
         <textarea disabled id="body" v-model="post.body"></textarea>
         <h2>Commentaires :</h2>

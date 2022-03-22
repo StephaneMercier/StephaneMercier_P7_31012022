@@ -15,8 +15,9 @@
         <label for="body">----------</label>
         <textarea disabled id="body" v-model="post.body"></textarea>
         <div class="comment-input">
+          <label for="comment" style="opacity: 0">n</label>
           <textarea
-            class="post-main__comment"
+            id="comment"
             max-length="155"
             type="text"
             placeholder="Votre commentaire :"
@@ -170,16 +171,16 @@ h1 {
     padding: 10px;
     margin-bottom: 4px;
   }
-  &__comment {
-    font-weight: bold;
-    width: 130%;
-    padding: 5px;
-    margin-bottom: 2rem;
-    border: 2px solid #2f3542;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
-      rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    border-radius: 20px;
-  }
+}
+#comment {
+  font-weight: bold;
+  width: 130%;
+  padding: 5px;
+  margin-bottom: 2rem;
+  border: 2px solid #2f3542;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 20px;
 }
 #body {
   font-weight: bold;

@@ -116,7 +116,7 @@ export default {
 
 .user-name {
   padding: 5px;
-  color: #e4323e;
+  color: #2d4567;
   font-weight: bold;
 }
 </style>

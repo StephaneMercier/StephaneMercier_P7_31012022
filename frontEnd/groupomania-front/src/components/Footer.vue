@@ -2,8 +2,8 @@
   <div>
     <footer role="contentinfo">
       <div class="footer-container">
-        <p>Groupomania Cie</p>
-        <p>Copyright 2021</p>
+        <h1>Groupomania Cie</h1>
+        <h2>Copyright 2021</h2>
       </div>
     </footer>
   </div>
@@ -26,7 +26,8 @@ div {
   display: flex;
   flex-direction: column;
 }
-p {
+h1,
+h2 {
   color: #fff;
 }
 </style>
