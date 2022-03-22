@@ -39,7 +39,6 @@
 
 <script>
 import postService from "../services/postService";
-// import commentService from "../services/commentService";
 import userService from "../services/userService";
 
 export default {
@@ -85,20 +84,6 @@ export default {
       };
       return event.toLocaleDateString("fr-FR", options);
     },
-    // createComment(id) {
-    //   commentService.createComment(id, this.commentBody).then(() => {
-    //     this.getAllPosts();
-    //     console.log(this.getAllPosts, "caca");
-    //     this.getUserInfo();
-    //     console.log(this.getUserInfo());
-    //     this.commentBody = "";
-    //   });
-    // },
-    // deleteComment(id) {
-    //   commentService.deleteComment(id).then(() => {
-    //     this.getAllPosts();
-    //   });
-    // },
   },
 };
 </script>
@@ -108,6 +93,9 @@ h1 {
   padding-top: 20px;
   color: #2d4567;
   font-weight: bold;
+}
+h2 {
+  margin-top: 20px;
 }
 
 .container {

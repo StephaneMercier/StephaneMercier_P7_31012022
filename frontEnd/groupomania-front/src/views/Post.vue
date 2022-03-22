@@ -108,6 +108,7 @@ export default {
     createComment(id) {
       commentService.createComment(id, this.commentBody).then(() => {
         this.getPost();
+        this.getUserInfo();
         this.commentBody = "";
       });
     },
