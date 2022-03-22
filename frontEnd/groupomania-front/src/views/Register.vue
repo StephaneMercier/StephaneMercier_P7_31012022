@@ -155,21 +155,17 @@ export default {
 }
 span {
   color: #fff;
-  background-color: #d3545c;
-  border: 1px solid #d3545c;
+  font-weight: bold;
+  background-color: #2f3542;
+  border: 1px solid #2f3542;
   border-radius: 60%;
   margin: 3px;
   padding: 3px;
   cursor: pointer;
-  &:hover {
-    color: #fff;
-    background-color: #2f3542;
-    border: 1px solid #2f3542;
-  }
   &.alert-message {
     padding: 0.3rem;
-    border: 1px solid #2f3542;
-    background-color: grey;
+    border: 1px solid #2d4567;
+    background-color: #2d4567;
     border-radius: 20px;
     font-size: medium;
     font-weight: bold;
@@ -177,13 +173,14 @@ span {
 }
 
 .btn-primary {
-  background-color: #d3545c;
-  border: 1px solid #d3545c;
+  font-weight: bold;
+  background-color: #2f3542;
+  border: 1px solid #2f3542;
   margin-top: -1.5rem;
   border-radius: 20px;
   &:hover {
-    background-color: #2f3542;
-    border: 1px solid #2f3542;
+    background-color: #d3545c;
+    border: 1px solid #d3545c;
   }
 }
 </style>

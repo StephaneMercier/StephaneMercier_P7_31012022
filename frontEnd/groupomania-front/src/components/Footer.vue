@@ -1,11 +1,10 @@
 <template>
   <div>
     <footer role="contentinfo">
-      <ul>
-        <li>Groupomania Cie</li>
-        <br />
-        <li>Copyright 2021</li>
-      </ul>
+      <div class="footer-container">
+        <p>Groupomania Cie</p>
+        <p>Copyright 2021</p>
+      </div>
     </footer>
   </div>
 </template>
@@ -27,7 +26,7 @@ div {
   display: flex;
   flex-direction: column;
 }
-ul {
+p {
   color: #fff;
 }
 </style>

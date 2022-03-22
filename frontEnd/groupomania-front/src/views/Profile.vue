@@ -33,15 +33,10 @@
       <div class="post-creation">
         <h3 class="post-creation__info">Créer une publication :</h3>
         <label for="title" class="title-label">Titre</label>
-        <textarea
-          id="textarea"
-          v-model="title"
-          rows="1"
-          maxlength="30"
-        ></textarea>
+        <textarea id="title" v-model="title" rows="1" maxlength="30"></textarea>
         <label for="post" class="post-label">Contenu</label>
         <textarea
-          id="textarea"
+          id="post"
           v-model="body"
           placeholder="Quelque chose à partager ?"
           rows="6"
@@ -193,7 +188,13 @@ export default {
       font-weight: bold;
     }
   }
-  #textarea {
+  #title {
+    width: 15rem;
+    border: 1px solid #2f3542;
+    border-radius: 20px;
+    padding: 0.5rem;
+  }
+  #post {
     width: 15rem;
     border: 1px solid #2f3542;
     border-radius: 20px;
@@ -205,10 +206,11 @@ export default {
     font-weight: bold;
     &.btn-secondary {
       margin: 0.5rem;
+      background-color: #2f3542;
     }
     &.btn-delete {
       border: 1px solid #d3545c;
-      background-color: #d3545c;
+      background-color: #e02d39;
       color: #fff;
     }
     &.btn-info {
@@ -305,7 +307,13 @@ export default {
     }
   }
 
-  #textarea {
+  #title {
+    width: 25rem;
+    border: 1px solid #2f3542;
+    border-radius: 20px;
+    padding: 0.5rem;
+  }
+  #post {
     width: 25rem;
     border: 1px solid #2f3542;
     border-radius: 20px;
@@ -318,10 +326,11 @@ export default {
     font-weight: bold;
     &.btn-secondary {
       margin: 0.5rem;
+      background-color: #2f3542;
     }
     &.btn-delete {
       border: 1px solid #d3545c;
-      background-color: #d3545c;
+      background-color: #e02d39;
       color: #fff;
     }
     &.btn-info {

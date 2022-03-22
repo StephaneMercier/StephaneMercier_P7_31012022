@@ -3,10 +3,10 @@
     <h1 class="post-header">Publication à modifier :</h1>
     <div class="container-post">
       <form class="post-update" method="post">
-        <label for="">Titre :</label>
-        <textarea class="post title" type="text" v-model="post.title" />
-        <label for="">Contenu :</label>
-        <textarea class="post body" type="text" v-model="post.body" />
+        <label for="title">Titre :</label>
+        <textarea id="title" type="text" v-model="post.title" />
+        <label for="body">Contenu :</label>
+        <textarea id="body" type="text" v-model="post.body" />
       </form>
     </div>
     <button
@@ -60,21 +60,26 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.post {
+
+#title {
   border: 2px solid #2f3542;
   border-radius: 20px;
   width: 60%;
   text-align: left;
   padding: 10px;
-  &.title {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  &.body {
-    height: 20vh;
-    margin-bottom: 3px;
-  }
+  margin-bottom: 5px;
+  font-weight: bold;
 }
+#body {
+  border: 2px solid #2f3542;
+  border-radius: 20px;
+  width: 60%;
+  text-align: left;
+  padding: 10px;
+  height: 20vh;
+  margin-bottom: 3px;
+}
+
 .btn {
   border-radius: 20px;
   font-weight: bold;

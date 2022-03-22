@@ -12,11 +12,8 @@
         <p class="post-main__title">
           {{ post.title }}
         </p>
-        <textarea
-          disabled
-          class="post-main__body"
-          v-model="post.body"
-        ></textarea>
+        <label for="body">----------</label>
+        <textarea disabled id="body" v-model="post.body"></textarea>
         <div class="comment-input">
           <textarea
             class="post-main__comment"
@@ -39,7 +36,8 @@
               v-for="comment in post.Comments"
               :key="comment.id"
             >
-              <textarea disabled class="comment-body" v-model="comment.body">
+              <label for="comment-body">----------</label>
+              <textarea disabled id="comment-body" v-model="comment.body">
               </textarea>
               <p class="comment-info">
                 {{ dateFormat(comment.createdAt) }}
@@ -124,7 +122,6 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  background-color: #d4cfcf;
   margin-top: -10px;
 }
 .container {
@@ -134,7 +131,7 @@ export default {
 }
 h1 {
   padding-top: 20px;
-  color: #d3545c;
+  color: #2d4567;
   font-weight: bold;
 }
 .post-container {
@@ -145,6 +142,9 @@ h1 {
   flex-direction: column;
   align-items: center;
   border: 2px solid #2f3542;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   border-radius: 20px;
   margin-bottom: 10px;
   padding-top: 5px;
@@ -159,30 +159,40 @@ h1 {
 }
 .post-main {
   &__title {
+    font-weight: bold;
     width: 60%;
     border: 2px solid #2f3542;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+      rgba(0, 0, 0, 0.22) 0px 15px 12px;
     border-radius: 20px;
     text-align: left;
     padding: 10px;
     margin-bottom: 4px;
   }
-  &__body {
-    width: 60%;
-    height: 150px;
-    border: 2px solid #2f3542;
-    border-radius: 20px;
-    text-align: left;
-    padding: 10px;
-  }
   &__comment {
+    font-weight: bold;
     width: 130%;
     padding: 5px;
     margin-bottom: 2rem;
     border: 2px solid #2f3542;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+      rgba(0, 0, 0, 0.22) 0px 15px 12px;
     border-radius: 20px;
   }
 }
+#body {
+  font-weight: bold;
+  width: 60%;
+  height: 150px;
+  border: 2px solid #2f3542;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  border-radius: 20px;
+  text-align: left;
+  padding: 10px;
+}
 .comment-input {
+  padding: 5px;
   margin-top: 10px;
   display: flex;
   flex-direction: column;
@@ -193,6 +203,8 @@ h1 {
   flex-direction: column;
   padding: 10px;
   border: 2px solid #2f3542;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
   border-radius: 20px;
   height: 20vh;
   width: 140%;
@@ -201,26 +213,29 @@ h1 {
   margin-bottom: 15px;
 }
 .display-comment {
+  padding: 5px;
   margin-bottom: 2rem;
   width: 100%;
 }
-.comment-body {
+#comment-body {
+  font-weight: bold;
   width: 100%;
-  padding-left: 5px;
+  padding: 5px;
   margin-bottom: 10px;
   display: flex;
   justify-content: flex-start;
   border-radius: 20px;
-  border: 1px solid #d3545c;
+  border: 2px solid #d3545c;
   overflow: hidden;
 }
 .btn {
+  margin: -10px 0 20px 0;
   border-radius: 20px;
   padding: 3px;
   font-weight: bold;
   font-size: small;
   &.btn-secondary {
-    margin: -30px 0 20px 0;
+    // margin: -30px 0 20px 0;
   }
 }
 </style>

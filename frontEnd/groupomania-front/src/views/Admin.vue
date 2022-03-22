@@ -7,7 +7,8 @@
     <div class="main">
       <div class="post-container" v-for="post in posts" :key="post.id">
         <div class="post title">{{ post.title }}</div>
-        <textarea class="post body" v-model="post.body"></textarea>
+        <label for="body">----------</label>
+        <textarea id="body" v-model="post.body"></textarea>
         <div class="user-info">
           Posté par :
           <span class="user-name"
@@ -72,7 +73,6 @@ export default {
 }
 
 .post-container {
-  background-color: #fff;
   max-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -84,7 +84,7 @@ export default {
   margin: 20px 20px;
 }
 .header {
-  margin: 30px;
+  margin-top: -120px;
 }
 .admin {
   font-weight: bold;
@@ -99,10 +99,15 @@ export default {
     margin-bottom: 5px;
     font-weight: bold;
   }
-  &.body {
-    height: 20vh;
-    margin-bottom: 3px;
-  }
+}
+#body {
+  border: 2px solid #2f3542;
+  border-radius: 20px;
+  width: 60%;
+  text-align: left;
+  padding: 10px;
+  height: 20vh;
+  margin-bottom: 3px;
 }
 .btn {
   border-radius: 20px;
@@ -110,7 +115,8 @@ export default {
 }
 
 .user-name {
-  color: #d3545c;
+  padding: 5px;
+  color: #e4323e;
   font-weight: bold;
 }
 </style>
